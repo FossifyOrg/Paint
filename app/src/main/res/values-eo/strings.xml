@@ -8,4 +8,6 @@
     <string name="allow_zooming_moving_canvas">Permesi zomi kaj movi kanvazon per gestoj</string>
     <string name="clear">Forviŝi</string>
     <string name="change_background_color">Ŝanĝi fonan koloron</string>
+    <string name="bucket_fill">Plenigi</string>
+    <string name="app_launcher_name">Pentri</string>
 </resources>

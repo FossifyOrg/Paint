@@ -9,4 +9,5 @@
     <string name="allow_zooming_moving_canvas">Permettre de zoomer et de déplacer le canevas avec des gestes</string>
     <string name="clear">Effacer</string>
     <string name="change_background_color">Changer l\'arrière-plan</string>
+    <string name="app_launcher_name">Paint</string>
 </resources>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="open_file">Otvori datoteku</string>
-    <string name="eraser">Gumica za brisanje</string>
-    <string name="eyedropper">Kapaljka za boje</string>
-    <string name="bucket_fill">Napunite kantu</string>
+    <string name="eraser">Gumica</string>
+    <string name="eyedropper">Kapaljka</string>
+    <string name="bucket_fill">Kantica s bojom</string>
     <string name="failed_to_load_image">Neuspjelo učitavanje slike %s</string>
     <string name="show_brush_size">Prikaži veličinu kista</string>
     <string name="allow_zooming_moving_canvas">Dopusti zumiranje i pomicanje platna pokretima</string>
     <string name="clear">Izbriši</string>
     <string name="change_background_color">Promjeni boju pozadine</string>
+    <string name="app_launcher_name">Boja</string>
 </resources>
