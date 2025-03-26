@@ -8,4 +8,6 @@
     <string name="allow_zooming_moving_canvas">Permitir ampliar e mover a tela com gestos</string>
     <string name="clear">Limpar</string>
     <string name="change_background_color">Mudar a cor de fundo</string>
+    <string name="app_launcher_name">Paint</string>
+    <string name="bucket_fill">Enchimento de balde</string>
 </resources>
