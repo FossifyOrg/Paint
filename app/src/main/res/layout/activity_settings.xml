@@ -147,6 +147,21 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/settings_relative_brush_size_holder"
+                style="@style/SettingsHolderCheckboxStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.fossify.commons.views.MyMaterialSwitch
+                    android:id="@+id/settings_relative_brush_size"
+                    style="@style/SettingsSwitchStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/use_relative_brush_size" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/settings_force_portrait_holder"
                 style="@style/SettingsHolderSwitchStyle"
                 android:layout_width="match_parent"
