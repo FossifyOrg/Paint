@@ -41,6 +41,11 @@ class Config(context: Context) : BaseConfig(context) {
         set(allowZoomingCanvas) = prefs.edit().putBoolean(ALLOW_ZOOMING_CANVAS, allowZoomingCanvas)
             .apply()
 
+    var relativeBrushSize: Boolean
+        get() = prefs.getBoolean(RELATIVE_BRUSH_SIZE, true)
+        set(relativeBrushSize) = prefs.edit().putBoolean(RELATIVE_BRUSH_SIZE, relativeBrushSize)
+            .apply()
+
     var forcePortraitMode: Boolean
         get() = prefs.getBoolean(FORCE_PORTRAIT_MODE, false)
         set(forcePortraitMode) = prefs.edit().putBoolean(FORCE_PORTRAIT_MODE, forcePortraitMode)
