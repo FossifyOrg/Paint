@@ -9,4 +9,5 @@
     <string name="allow_zooming_moving_canvas">Salli zoomaus ja kankaan siirtäminen eleillä</string>
     <string name="clear">Tyhjennä</string>
     <string name="change_background_color">Vaihda taustaväriä</string>
+    <string name="app_launcher_name">Paint</string>
 </resources>
