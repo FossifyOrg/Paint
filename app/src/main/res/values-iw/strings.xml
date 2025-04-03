@@ -9,4 +9,5 @@
     <string name="clear">נקה</string>
     <string name="change_background_color">שנה צבע רקע</string>
     <string name="bucket_fill">למלא</string>
+    <string name="app_launcher_name">צבע</string>
 </resources>
