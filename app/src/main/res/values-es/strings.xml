@@ -9,4 +9,5 @@
     <string name="allow_zooming_moving_canvas">Permitir hacer zoom y mover el lienzo con gestos</string>
     <string name="clear">Limpiar</string>
     <string name="change_background_color">Cambiar color de fondo</string>
+    <string name="app_launcher_name">Pintar</string>
 </resources>
