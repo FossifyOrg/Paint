@@ -33,7 +33,6 @@ import java.util.concurrent.ExecutionException
 import kotlin.math.abs
 
 class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val MIN_ERASER_WIDTH = 20f
     private val MAX_HISTORY_COUNT = 1000
     private val FLOOD_FILL_TOLERANCE = 1
 
@@ -334,9 +333,6 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun changePaint(paintOptions: PaintOptions) {
         mPaint.color = if (paintOptions.isEraser) mBackgroundColor else paintOptions.color
         mPaint.strokeWidth = paintOptions.strokeWidth
-//        if (paintOptions.isEraser && mPaint.strokeWidth < MIN_ERASER_WIDTH) {
-//            mPaint.strokeWidth = MIN_ERASER_WIDTH
-//        }
     }
 
     fun clearCanvas() {
