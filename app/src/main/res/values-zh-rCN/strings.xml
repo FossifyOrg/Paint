@@ -5,9 +5,10 @@
     <string name="eyedropper">取色器</string>
     <string name="bucket_fill">填充</string>
     <string name="failed_to_load_image">无法加载图像 %s</string>
-    <string name="show_brush_size">显示笔刷大小工具</string>
+    <string name="show_brush_size">显示画笔大小工具</string>
     <string name="allow_zooming_moving_canvas">允许使用手势缩放和移动画布</string>
     <string name="clear">清除</string>
     <string name="change_background_color">更改背景色</string>
     <string name="app_launcher_name">Paint</string>
+    <string name="use_relative_brush_size">根据缩放级别调整画笔大小</string>
 </resources>
