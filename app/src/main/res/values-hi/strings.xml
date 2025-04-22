@@ -9,4 +9,6 @@
     <string name="show_brush_size">ब्रश आकार का टूल दिखाएं</string>
     <string name="allow_zooming_moving_canvas">ज़ूम करने और कैनवास को इशारों से हिलाने की अनुमति दें</string>
     <string name="clear">साफ़</string>
+    <string name="app_launcher_name">पेंट</string>
+    <string name="use_relative_brush_size">ब्रश का आकार ज़ूम स्तर के अनुसार समायोजित करें</string>
 </resources>
