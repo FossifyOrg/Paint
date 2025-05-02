@@ -10,4 +10,5 @@
     <string name="change_background_color">Mudar a cor de fundo</string>
     <string name="app_launcher_name">Paint</string>
     <string name="bucket_fill">Enchimento de balde</string>
+    <string name="use_relative_brush_size">Ajustar tamanho do pincel baseado no nível do zoom</string>
 </resources>
