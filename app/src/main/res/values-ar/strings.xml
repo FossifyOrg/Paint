@@ -9,4 +9,6 @@
     <string name="allow_zooming_moving_canvas">السماح بتكبير الصورة وتحريكها باستخدام الإيماءات</string>
     <string name="clear">مسح</string>
     <string name="change_background_color">تغيير لون الخلفية</string>
+    <string name="app_launcher_name">الرسم</string>
+    <string name="use_relative_brush_size">ضبط حجم الفرشاة بناءً على مستوى التكبير/التصغير</string>
 </resources>
