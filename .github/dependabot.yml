@@ -1,4 +1,10 @@
 version: 2
+
+commit-message:
+  prefix: "chore"
+  prefix-development: "chore"
+  include: "scope"
+  
 updates:
   - package-ecosystem: "bundler"
     directory: "/"
