@@ -1,0 +1,9 @@
+Added:
+• Option to disable zoom-based brush size adjustment
+
+Changed:
+• Marked the app as beta
+• Updated translations
+
+Fixed:
+• Minimum erasure size now matches minimum brush size
