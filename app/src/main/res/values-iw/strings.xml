@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="open_file">פתח קובץ</string>
-    <string name="eraser">מַחַק</string>
-    <string name="eyedropper">מפיל עיניים</string>
+    <string name="eraser">מחיקה</string>
+    <string name="eyedropper">טפטפת</string>
     <string name="failed_to_load_image">טעינת התמונה %s נכשלה</string>
     <string name="show_brush_size">הצג כלי גודל מברשת</string>
-    <string name="allow_zooming_moving_canvas">אפשר התקרבות והזזת הקנבס באמצעות מחוות</string>
+    <string name="allow_zooming_moving_canvas">אפשר שינוי מרחק והזזת בד הציור באמצעות מחוות</string>
     <string name="clear">נקה</string>
     <string name="change_background_color">שנה צבע רקע</string>
-    <string name="bucket_fill">למלא</string>
-    <string name="app_launcher_name">צבע</string>
+    <string name="bucket_fill">מילוי</string>
+    <string name="app_launcher_name">צייר</string>
+    <string name="use_relative_brush_size">התאמת גודל המברשת בהתאם לרמת הזום</string>
 </resources>
