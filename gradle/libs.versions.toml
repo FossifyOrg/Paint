@@ -4,7 +4,7 @@ kotlin = "1.9.25"
 #Detekt
 detekt = "1.23.8"
 #AndroidX
-androidx-print = "1.0.0"
+androidx-print = "1.1.0"
 #Fossify
 commons = "1.0.0"
 #Gradle
