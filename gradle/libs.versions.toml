@@ -6,7 +6,7 @@ detekt = "1.23.8"
 #AndroidX
 androidx-print = "1.1.0"
 #Fossify
-commons = "1.0.0"
+commons = "2.0.1"
 #Gradle
 gradlePlugins-agp = "8.10.1"
 #build
