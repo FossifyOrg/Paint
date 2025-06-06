@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_launcher_name">Paint</string>
+    <string name="open_file">Atvērt datni</string>
+    <string name="eraser">Dzēšgumija</string>
+    <string name="eyedropper">Pipete</string>
+    <string name="bucket_fill">Aizliešana ar krāsu</string>
+    <string name="failed_to_load_image">Neizdevās ielādēt attēlu %s</string>
+    <string name="show_brush_size">Rādīt otas lieluma rīku</string>
+    <string name="allow_zooming_moving_canvas">Ļaut audekla tālummaiņu un pārvietošanu ar pirkstu kustībām</string>
+    <string name="clear">Notīrīt</string>
+    <string name="change_background_color">Mainīt fona krāsu</string>
+    <string name="use_relative_brush_size">Pielāgot otas lielumu atbilstoši tālummaiņas līmenim</string>
+</resources>
