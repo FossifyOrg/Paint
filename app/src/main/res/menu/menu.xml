@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="AppCompatResource">
     <item
+        android:id="@+id/menu_togle_stylus"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="@string/save"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/menu_confirm"
         android:icon="@drawable/ic_check_vector"
         android:title="@string/save"
