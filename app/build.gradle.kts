@@ -129,9 +129,13 @@ android {
 
 detekt {
     baseline = file("detekt-baseline.xml")
+    config.setFrom("$rootDir/detekt.yml")
+    buildUponDefaultConfig = true
+    allRules = false
 }
 
 dependencies {
     implementation(libs.fossify.commons)
     implementation(libs.androidx.print)
+    detektPlugins(libs.compose.detekt)
 }
