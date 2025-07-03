@@ -3,6 +3,7 @@
 kotlin = "2.1.21"
 #Detekt
 detekt = "1.23.8"
+detektCompose = "0.4.22"
 #AndroidX
 androidx-print = "1.1.0"
 #Fossify
@@ -18,6 +19,8 @@ app-build-kotlinJVMTarget = "17"
 [libraries]
 #AndroidX
 androidx-print = { module = "androidx.print:print", version.ref = "androidx-print" }
+#Compose
+compose-detekt = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektCompose" }
 #Fossify
 fossify-commons = { module = "org.fossify:commons", version.ref = "commons" }
 [plugins]
