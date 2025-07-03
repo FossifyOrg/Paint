@@ -9,14 +9,12 @@
     <ID>CyclomaticComplexMethod:MyCanvas.kt$MyCanvas$override fun onTouchEvent(event: MotionEvent): Boolean</ID>
     <ID>EmptyCatchBlock:MainActivity.kt$MainActivity${ }</ID>
     <ID>LargeClass:MainActivity.kt$MainActivity : SimpleActivityCanvasListener</ID>
-    <ID>LongMethod:MyCanvas.kt$MyCanvas$override fun onTouchEvent(event: MotionEvent): Boolean</ID>
     <ID>MagicNumber:Config.kt$Config$40f</ID>
     <ID>MagicNumber:MainActivity.kt$MainActivity$0.03f</ID>
     <ID>MagicNumber:MainActivity.kt$MainActivity$100</ID>
     <ID>MagicNumber:MainActivity.kt$MainActivity$100f</ID>
     <ID>MagicNumber:MainActivity.kt$MainActivity$5f</ID>
     <ID>MagicNumber:MainActivity.kt$MainActivity$70</ID>
-    <ID>MagicNumber:MyCanvas.kt$MyCanvas$1000</ID>
     <ID>MagicNumber:MyCanvas.kt$MyCanvas$100f</ID>
     <ID>MagicNumber:MyCanvas.kt$MyCanvas.ScaleListener$0.1f</ID>
     <ID>MagicNumber:MyCanvas.kt$MyCanvas.ScaleListener$10.0f</ID>
