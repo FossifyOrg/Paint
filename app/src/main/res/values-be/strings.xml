@@ -9,4 +9,5 @@
     <string name="allow_zooming_moving_canvas">Дазволіць масштабаванне і перамяшчэнне палатна жэстамі</string>
     <string name="clear">Ачысціць</string>
     <string name="change_background_color">Змяніць колер фону</string>
+    <string name="app_launcher_name">Маляванне</string>
 </resources>
