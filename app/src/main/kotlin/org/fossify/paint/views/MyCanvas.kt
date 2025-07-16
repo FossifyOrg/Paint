@@ -5,36 +5,46 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.Point
 import android.graphics.PointF
+import android.graphics.RectF
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.os.Parcelable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.MotionEvent.INVALID_POINTER_ID
 import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.ViewConfiguration
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.withMatrix
+import androidx.core.view.doOnLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.request.RequestOptions
 import org.fossify.commons.extensions.toast
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.paint.R
-import org.fossify.paint.extensions.contains
 import org.fossify.paint.extensions.removeFirst
 import org.fossify.paint.extensions.removeLast
 import org.fossify.paint.extensions.removeLastOrNull
-import org.fossify.paint.extensions.vectorFloodFill
+import org.fossify.paint.helpers.BucketFill
+import org.fossify.paint.helpers.DrawingRenderer
 import org.fossify.paint.interfaces.CanvasListener
 import org.fossify.paint.models.MyPath
 import org.fossify.paint.models.PaintOptions
 import java.util.concurrent.ExecutionException
+import java.util.concurrent.Executor
 import kotlin.math.abs
 
 class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val MAX_HISTORY_COUNT = 1000
-    private val FLOOD_FILL_TOLERANCE = 1
 
     private val mScaledTouchSlop = ViewConfiguration.get(context).scaledTouchSlop
 
@@ -47,6 +57,7 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var mLastBackgroundBitmap: Bitmap? = null
 
     private var mPaint = Paint()
+    private val mRenderer = DrawingRenderer()
     private var mPath = MyPath()
     private var mPaintOptions = PaintOptions()
 
@@ -70,8 +81,11 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var mIgnoreMultitouchChanges = false
     private var mWasScalingInGesture = false
     private var mWasMovingCanvasInGesture = false
-    private var mBackgroundColor = 0
-    private var mCenter: PointF? = null
+    private var mBackgroundColor = Color.WHITE
+    private var mDrawingInProgress = false
+    private val mDrawingHandler = Handler(Looper.getMainLooper())
+    private val mPendingEdits = ArrayDeque<DrawingEdit>()
+    internal var drawingExecutor = Executor { task -> ensureBackgroundThread { task.run() } }
 
     private var mScaleDetector: ScaleGestureDetector? = null
     private var mScaleFactor = 1f
@@ -80,6 +94,10 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var mTouchSloppedBeforeMultitouch: Boolean = false
 
     init {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            // Android 8's hardware renderer clips inverse fills to the path bounds.
+            setLayerType(LAYER_TYPE_SOFTWARE, null)
+        }
         mPaint.apply {
             color = mPaintOptions.color
             style = Paint.Style.STROKE
@@ -104,10 +122,21 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     public override fun onRestoreInstanceState(state: Parcelable) {
         val savedOperations = DrawingStateHolder.operations
         if (savedOperations != null) {
-            mOperations = savedOperations
+            whenDrawingReady { mOperations = savedOperations }
         }
         super.onRestoreInstanceState(state)
         updateUndoVisibility()
+    }
+
+    override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
+        super.onSizeChanged(width, height, oldWidth, oldHeight)
+        whenDrawingReady {}
+    }
+
+    override fun onDetachedFromWindow() {
+        mLastMotionEvent?.recycle()
+        mLastMotionEvent = null
+        super.onDetachedFromWindow()
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -116,6 +145,18 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
         }
 
         val action = event.actionMasked
+        if (action == MotionEvent.ACTION_CANCEL) {
+            mActivePointerId = INVALID_POINTER_ID
+            mIgnoreTouches = false
+            mIgnoreMultitouchChanges = false
+            mWasMultitouch = false
+            mWasScalingInGesture = false
+            mWasMovingCanvasInGesture = false
+            mTouchSloppedBeforeMultitouch = false
+            mPath.reset()
+            invalidate()
+            return true
+        }
         if (mIgnoreTouches && action == MotionEvent.ACTION_UP) {
             mIgnoreTouches = false
             mWasScalingInGesture = false
@@ -138,15 +179,12 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
             return true
         }
 
-        val scaledWidth = width / mScaleFactor
-        val touchPercentageX = x / width
-        val compensationX = (scaledWidth / 2) * (1 - mScaleFactor)
-        val newValueX = scaledWidth * touchPercentageX - compensationX - (mPosX / mScaleFactor)
-
-        val scaledHeight = height / mScaleFactor
-        val touchPercentageY = y / height
-        val compensationY = (scaledHeight / 2) * (1 - mScaleFactor)
-        val newValueY = scaledHeight * touchPercentageY - compensationY - (mPosY / mScaleFactor)
+        val point = floatArrayOf(x, y)
+        val inverse = Matrix()
+        canvasMatrix().invert(inverse)
+        inverse.mapPoints(point)
+        val newValueX = point[0]
+        val newValueY = point[1]
 
         when (action) {
             MotionEvent.ACTION_DOWN -> {
@@ -158,8 +196,6 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 mLastTouchX = x
                 mLastTouchY = y
                 actionDown(newValueX, newValueY)
-                mUndoneOperations.clear()
-                updateRedoVisibility(false)
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -184,9 +220,15 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 mIgnoreMultitouchChanges = false
             }
 
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+            MotionEvent.ACTION_UP -> {
                 mActivePointerId = INVALID_POINTER_ID
-                actionUp(false)
+                val isInsideCanvas = x >= 0 && x < width && y >= 0 && y < height
+                val fillPoint = if (!mWasMultitouch && isInsideCanvas) {
+                    PointF(newValueX, newValueY)
+                } else {
+                    null
+                }
+                actionUp(false, fillPoint)
                 mWasScalingInGesture = false
                 mWasMovingCanvasInGesture = false
             }
@@ -209,6 +251,7 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
         }
 
+        mLastMotionEvent?.recycle()
         mLastMotionEvent = MotionEvent.obtain(event)
         invalidate()
         return true
@@ -216,42 +259,35 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.save()
+        drawDrawing(canvas, true)
+    }
 
-        if (mCenter == null) {
-            mCenter = PointF(width / 2f, height / 2f)
-        }
+    private fun drawDrawing(canvas: Canvas, includePendingEdits: Boolean) {
+        canvas.withMatrix(canvasMatrix()) {
+            mRenderer.draw(this)
 
-        canvas.translate(mPosX, mPosY)
-        canvas.scale(mScaleFactor, mScaleFactor, mCenter!!.x, mCenter!!.y)
-
-        if (mBackgroundBitmap != null) {
-            val bitmap = mBackgroundBitmap!!
-            val left = (width - bitmap.width) / 2f
-            val top = (height - bitmap.height) / 2f
-            canvas.drawBitmap(bitmap, left, top, null)
-        }
-
-        if (mOperations.isNotEmpty()) {
-            for ((path, paintOptions) in mOperations) {
-                changePaint(paintOptions)
-                canvas.drawPath(path, mPaint)
+            if (includePendingEdits) {
+                for (edit in mPendingEdits) {
+                    if (edit is DrawingEdit.Stroke) {
+                        changePaint(edit.options)
+                        drawPath(edit.path, mPaint)
+                    }
+                }
+                changePaint(mPaintOptions)
+                drawPath(mPath, mPaint)
             }
         }
-
-        changePaint(mPaintOptions)
-        canvas.drawPath(mPath, mPaint)
-        canvas.restore()
     }
 
     fun undo() {
+        whenDrawingReady { applyUndo() }
+    }
+
+    private fun applyUndo() {
         if (mOperations.isEmpty() && mLastOperations.isNotEmpty()) {
             mOperations = mLastOperations.clone() as LinkedHashMap<MyPath, PaintOptions>
             mBackgroundBitmap = mLastBackgroundBitmap
             mLastOperations.clear()
-            updateUndoVisibility()
-            updateClearConfirmation()
-            invalidate()
             return
         }
 
@@ -260,18 +296,18 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
             if (paintOptions != null && path != null) {
                 mUndoneOperations[path] = paintOptions
             }
-            invalidate()
         }
-        updateUndoRedoVisibility()
     }
 
     fun redo() {
+        whenDrawingReady { applyRedo() }
+    }
+
+    private fun applyRedo() {
         if (mUndoneOperations.isNotEmpty()) {
             val (path, paintOptions) = mUndoneOperations.removeLast()
-            addOperation(path, paintOptions)
-            invalidate()
+            recordOperation(path, paintOptions, clearRedo = false)
         }
-        updateUndoRedoVisibility()
     }
 
     fun toggleEraser(isEraserOn: Boolean) {
@@ -289,6 +325,10 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     fun updateBackgroundColor(newColor: Int) {
+        whenDrawingReady { applyBackgroundColor(newColor) }
+    }
+
+    private fun applyBackgroundColor(newColor: Int) {
         mBackgroundColor = newColor
         setBackgroundColor(newColor)
         mBackgroundBitmap = null
@@ -311,11 +351,16 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
         setBrushSize(mCurrBrushSize)
     }
 
-    fun getBitmap(): Bitmap {
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    fun getBitmap(includePendingEdits: Boolean = true): Bitmap {
+        val bitmap = createBitmap(width, height)
         val canvas = Canvas(bitmap)
         canvas.drawColor(Color.WHITE)
-        draw(canvas)
+        if (includePendingEdits) {
+            draw(canvas)
+        } else {
+            canvas.drawColor(mBackgroundColor)
+            drawDrawing(canvas, false)
+        }
         return bitmap
     }
 
@@ -331,10 +376,9 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 val builder =
                     Glide.with(context).asBitmap().load(path).apply(options).submit(size.x, size.y)
 
-                mBackgroundBitmap = builder.get()
+                val bitmap = builder.get()
                 activity.runOnUiThread {
-                    invalidate()
-                    updateClearConfirmation()
+                    whenDrawingReady { mBackgroundBitmap = bitmap }
                 }
             } catch (e: ExecutionException) {
                 val errorMsg =
@@ -345,21 +389,27 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun changePaint(paintOptions: PaintOptions) {
-        mPaint.color = if (paintOptions.isEraser) mBackgroundColor else paintOptions.color
-        mPaint.strokeWidth = paintOptions.strokeWidth
+        paintOptions.applyTo(mPaint, mBackgroundColor)
     }
 
     fun clearCanvas() {
+        mPath.reset()
+        whenDrawingReady { applyClear() }
+    }
+
+    private fun applyClear() {
         mLastOperations = mOperations.clone() as LinkedHashMap<MyPath, PaintOptions>
         mLastBackgroundBitmap = mBackgroundBitmap
         mBackgroundBitmap = null
-        mPath.reset()
         mOperations.clear()
         mUndoneOperations.clear()
-        updateUndoVisibility()
-        updateRedoVisibility(false)
-        updateClearConfirmation()
-        invalidate()
+    }
+
+    internal fun replaceDrawing(viewport: RectF, backgroundColor: Int, paths: Map<MyPath, PaintOptions>) {
+        applyViewportBounds(viewport)
+        applyClear()
+        applyBackgroundColor(backgroundColor)
+        for ((path, options) in paths) recordOperation(path, options)
     }
 
     private fun actionDown(x: Float, y: Float) {
@@ -375,15 +425,13 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
         mCurY = y
     }
 
-    private fun actionUp(forceLineDraw: Boolean) {
+    private fun actionUp(forceLineDraw: Boolean, fillPoint: PointF? = null) {
         if (mIsBucketFillOn) {
-            bucketFill()
+            fillPoint?.let { bucketFill(it.x, it.y) }
         } else if (!mWasMultitouch || forceLineDraw) {
             drawADot()
         }
 
-        updateUndoVisibility()
-        updateClearConfirmation()
         mPath = MyPath()
         mPaintOptions =
             PaintOptions(mPaintOptions.color, mPaintOptions.strokeWidth, mPaintOptions.isEraser)
@@ -396,83 +444,189 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun updateUndoVisibility() {
-        mListener?.toggleUndoVisibility(mOperations.isNotEmpty() || mLastOperations.isNotEmpty())
+        val hasEdits = mOperations.isNotEmpty() || mLastOperations.isNotEmpty()
+        mListener?.toggleUndoVisibility(hasEdits || hasPendingEdits())
     }
 
-    private fun updateRedoVisibility(visible: Boolean = mUndoneOperations.isNotEmpty()) {
-        mListener?.toggleRedoVisibility(visible)
+    private fun updateRedoVisibility() {
+        mListener?.toggleRedoVisibility(mUndoneOperations.isNotEmpty() && !hasPendingEdits())
     }
 
     private fun updateClearConfirmation() {
-        val hasContent = mBackgroundBitmap != null || mOperations.isNotEmpty()
+        val hasContent = mBackgroundBitmap != null || mOperations.isNotEmpty() || hasPendingEdits()
         mListener?.toggleHasContent(hasContent)
     }
 
-    private fun bucketFill() {
-        val touchedX = mCurX.toInt()
-        val touchedY = mCurY.toInt()
-        if (contains(touchedX, touchedY)) {
-            val bitmap = getBitmap()
-            val color = mPaintOptions.color
+    private fun bucketFill(x: Float, y: Float) {
+        submitEdit(DrawingEdit.Fill(x, y, mPaintOptions.color))
+    }
 
-            ensureBackgroundThread {
-                val path = bitmap.vectorFloodFill(
-                    color = color,
-                    x = touchedX,
-                    y = touchedY,
-                    tolerance = FLOOD_FILL_TOLERANCE
-                )
-                val paintOpts = PaintOptions(color = color, strokeWidth = 5f)
-                addOperation(path, paintOpts)
-                post { invalidate() }
+    fun whenDrawingReady(action: () -> Unit) {
+        submitEdit(DrawingEdit.Action(action))
+    }
+
+    private fun submitEdit(edit: DrawingEdit) {
+        mPendingEdits.addLast(edit)
+        processNextEdit()
+        updateUndoRedoVisibility()
+        invalidate()
+    }
+
+    private fun processNextEdit() {
+        if (mDrawingInProgress) return
+        while (!prepareDrawing()) {
+            when (val edit = mPendingEdits.removeFirstOrNull() ?: return) {
+                is DrawingEdit.Fill -> {
+                    fillRegion(edit)
+                    return
+                }
+                is DrawingEdit.Stroke -> recordOperation(edit.path, edit.options)
+                is DrawingEdit.Action -> edit.action()
             }
         }
+    }
+
+    private fun drawingSnapshot(): DrawingRenderer.Snapshot {
+        val bitmap = mBackgroundBitmap
+        val origin = bitmap?.let { PointF((width - it.width) / 2f, (height - it.height) / 2f) } ?: PointF()
+        return DrawingRenderer.Snapshot(mOperations.toList(), mBackgroundColor, bitmap, origin)
+    }
+
+    private fun prepareDrawing(): Boolean {
+        val snapshot = drawingSnapshot()
+        if (mRenderer.update(snapshot)) return false
+        val previous = mRenderer.drawing
+        mDrawingInProgress = true
+        drawingExecutor.execute {
+            val result = runCatching { DrawingRenderer.prepare(snapshot, previous) }
+            mDrawingHandler.post {
+                mRenderer.drawing = result.getOrElse { error ->
+                    reportDrawingError(error)
+                    DrawingRenderer.Drawing(snapshot)
+                }
+                finishDrawingWork()
+            }
+        }
+        return true
+    }
+
+    private fun fillRegion(request: DrawingEdit.Fill) {
+        val snapshot = drawingSnapshot()
+        val previous = mRenderer.drawing
+        val filler = BucketFill(
+            snapshot.backgroundColor,
+            snapshot.operations.map { (path, options) -> Path(path) to options.copy() },
+            snapshot.bitmap,
+            snapshot.origin
+        )
+        mDrawingInProgress = true
+        drawingExecutor.execute {
+            val result = runCatching {
+                val path = filler.fill(request.x, request.y, request.color) ?: return@runCatching null
+                val options = PaintOptions(color = request.color, isFill = true)
+                val operations = (snapshot.operations + (path to options)).takeLast(MAX_HISTORY_COUNT)
+                path to DrawingRenderer.prepare(snapshot.copy(operations = operations), previous)
+            }
+            mDrawingHandler.post {
+                result.fold(
+                    onSuccess = { completed ->
+                        completed?.let { (path, drawing) ->
+                            recordOperation(path, drawing.snapshot.operations.last().second)
+                            mRenderer.drawing = drawing
+                        }
+                    },
+                    onFailure = ::reportDrawingError
+                )
+                finishDrawingWork()
+            }
+        }
+    }
+
+    private fun finishDrawingWork() {
+        mDrawingInProgress = false
+        processNextEdit()
+        updateUndoRedoVisibility()
+        invalidate()
+    }
+
+    private fun reportDrawingError(error: Throwable) {
+        Log.e("Paint", "Failed to prepare drawing", error)
+        context.toast(R.string.unknown_error_occurred)
+    }
+
+    private sealed interface DrawingEdit {
+        data class Fill(val x: Float, val y: Float, val color: Int) : DrawingEdit
+        data class Stroke(val path: MyPath, val options: PaintOptions) : DrawingEdit
+        data class Action(val action: () -> Unit) : DrawingEdit
     }
 
     private fun drawADot() {
         mPath.lineTo(mCurX, mCurY)
 
-        // draw a dot on click
-        if (mStartX == mCurX && mStartY == mCurY) {
-            mPath.lineTo(mCurX, mCurY + 2)
-            mPath.lineTo(mCurX + 1, mCurY + 2)
-            mPath.lineTo(mCurX + 1, mCurY)
-        }
         addOperation(mPath, mPaintOptions)
     }
 
     fun addOperation(path: MyPath, paintOptions: PaintOptions) {
-        mOperations[path] = paintOptions
+        submitEdit(DrawingEdit.Stroke(path, paintOptions.copy()))
+    }
 
-        // maybe free up some memory
+    private fun recordOperation(path: MyPath, paintOptions: PaintOptions, clearRedo: Boolean = true) {
+        mOperations[path] = paintOptions
+        if (clearRedo) mUndoneOperations.clear()
+
         while (mOperations.size > MAX_HISTORY_COUNT) {
             mOperations.removeFirst()
         }
-        updateClearConfirmation()
+    }
+
+    private fun canvasMatrix() = Matrix().apply {
+        preTranslate(mPosX, mPosY)
+        preScale(mScaleFactor, mScaleFactor, width / 2f, height / 2f)
+    }
+
+    fun getViewportBounds(): RectF {
+        val inverse = Matrix()
+        canvasMatrix().invert(inverse)
+        return RectF(0f, 0f, width.toFloat(), height.toFloat()).apply { inverse.mapRect(this) }
+    }
+
+    fun setViewportBounds(bounds: RectF) {
+        doOnLayout { applyViewportBounds(bounds) }
+    }
+
+    internal fun applyViewportBounds(bounds: RectF) {
+        require(bounds.width() > 0f && bounds.height() > 0f)
+        val scale = minOf(width / bounds.width(), height / bounds.height())
+        val posX = (width / 2f - bounds.centerX()) * scale
+        val posY = (height / 2f - bounds.centerY()) * scale
+        require(scale > 0f && listOf(scale, posX, posY).all { it.isFinite() })
+        mScaleFactor = scale
+        mPosX = posX
+        mPosY = posY
+        setBrushSize(mCurrBrushSize)
+        invalidate()
     }
 
     fun getPathsMap() = mOperations
 
-    fun getDrawingHashCode(): Long {
-        return if (mOperations.isEmpty()) {
-            0
-        } else {
-            mOperations.hashCode().toLong() + (mBackgroundBitmap?.hashCode()?.toLong() ?: 0L)
-        }
+    internal fun getPreparedDrawing() = mRenderer.drawing
+
+    fun hasPendingEdits() = mDrawingInProgress || mPendingEdits.isNotEmpty()
+
+    fun getDrawingHashCode(): Long = if (mOperations.isEmpty()) {
+        0
+    } else {
+        mOperations.hashCode().toLong() + (mBackgroundBitmap?.hashCode()?.toLong() ?: 0L)
     }
 
     private fun MotionEvent?.isTouchSlop(pointerIndex: Int, startX: Float, startY: Float): Boolean {
-        return if (this == null || actionMasked != MotionEvent.ACTION_MOVE) {
-            false
-        } else {
-            try {
-                val moveX = abs(getX(pointerIndex) - startX)
-                val moveY = abs(getY(pointerIndex) - startY)
+        return !(this == null || actionMasked != MotionEvent.ACTION_MOVE) && try {
+            val moveX = abs(getX(pointerIndex) - startX)
+            val moveY = abs(getY(pointerIndex) - startY)
 
-                moveX <= mScaledTouchSlop && moveY <= mScaledTouchSlop
-            } catch (e: Exception) {
-                false
-            }
+            moveX <= mScaledTouchSlop && moveY <= mScaledTouchSlop
+        } catch (_: Exception) {
+            false
         }
     }
 
@@ -482,16 +636,17 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 mPath.reset()
             }
 
-            if (mScaleFactor * detector.scaleFactor !in 0.1f..10.0f) {
-                return true
-            }
-
+            val newScale = (mScaleFactor * detector.scaleFactor).coerceIn(
+                minOf(0.1f, mScaleFactor), maxOf(10.0f, mScaleFactor)
+            )
+            if (newScale == mScaleFactor) return true
+            val factor = newScale / mScaleFactor
             mIgnoreTouches = true
             mWasScalingInGesture = true
-            mScaleFactor *= detector.scaleFactor
+            mScaleFactor = newScale
 
-            mPosX *= detector.scaleFactor
-            mPosY *= detector.scaleFactor
+            mPosX *= factor
+            mPosY *= factor
 
             setBrushSize(mCurrBrushSize)
             invalidate()
@@ -500,7 +655,6 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 }
 
-// since we don't use view models, this serves as a simple state holder to save drawing operations
 object DrawingStateHolder {
     var operations: LinkedHashMap<MyPath, PaintOptions>? = null
 }

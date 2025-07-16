@@ -29,7 +29,10 @@ base {
 android {
     compileSdk = project.libs.versions.app.build.compileSDKVersion.get().toInt()
 
+    testBuildType = providers.gradleProperty("testBuildType").orElse("debug").get()
+
     defaultConfig {
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         applicationId = project.property("APP_ID").toString()
         minSdk = project.libs.versions.app.build.minimumSDK.get().toInt()
         targetSdk = project.libs.versions.app.build.targetSDK.get().toInt()
@@ -90,6 +93,10 @@ android {
         getByName("main").java.directories.add("src/main/kotlin")
     }
 
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
+
     compileOptions {
         val currentJavaVersionFromLibs =
             JavaVersion.valueOf(libs.versions.app.build.javaVersion.get())
@@ -137,6 +144,11 @@ detekt {
 }
 
 dependencies {
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.junit)
+    testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
+    implementation(libs.clipper2)
     implementation(libs.fossify.commons)
     implementation(libs.androidx.print)
     detektPlugins(libs.compose.detekt)

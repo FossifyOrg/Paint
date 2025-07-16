@@ -1,6 +1,5 @@
 package org.fossify.paint.activities
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -63,7 +62,9 @@ import org.fossify.paint.interfaces.CanvasListener
 import org.fossify.paint.models.Svg
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.IOException
 import java.io.OutputStream
+import kotlin.math.max
 
 class MainActivity : SimpleActivity(), CanvasListener {
     companion object {
@@ -242,7 +243,8 @@ class MainActivity : SimpleActivity(), CanvasListener {
     }
 
     override fun onBackPressedCompat(): Boolean {
-        val hasUnsavedChanges = savedPathsHash != binding.myCanvas.getDrawingHashCode()
+        val hasUnsavedChanges = binding.myCanvas.hasPendingEdits() ||
+                savedPathsHash != binding.myCanvas.getDrawingHashCode()
         if (hasUnsavedChanges && System.currentTimeMillis() - lastSavePromptTS > SAVE_DISCARD_PROMPT_INTERVAL) {
             lastSavePromptTS = System.currentTimeMillis()
             ConfirmationAdvancedDialog(
@@ -291,16 +293,21 @@ class MainActivity : SimpleActivity(), CanvasListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
-        if (requestCode == PICK_IMAGE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
-            tryOpenUri(resultData.data!!, resultData)
-        } else if (requestCode == SAVE_IMAGE_INTENT && resultCode == Activity.RESULT_OK && resultData != null && resultData.data != null) {
-            val outputStream = contentResolver.openOutputStream(resultData.data!!)
-            if (defaultExtension == SVG) {
-                Svg.saveToOutputStream(this, outputStream, binding.myCanvas)
-            } else {
-                saveToOutputStream(outputStream, defaultExtension.getCompressionFormat(), false)
+        if (resultCode != RESULT_OK) return
+        val uri = resultData?.data ?: return
+
+        when (requestCode) {
+            PICK_IMAGE_INTENT -> tryOpenUri(uri, resultData)
+            SAVE_IMAGE_INTENT -> {
+                val outputStream = contentResolver.openOutputStream(uri)
+                if (defaultExtension == SVG) {
+                    Svg.saveToOutputStream(this, outputStream, binding.myCanvas) { savedPathsHash = it }
+                } else {
+                    saveToOutputStream(outputStream, defaultExtension.getCompressionFormat(), false) {
+                        savedPathsHash = it
+                    }
+                }
             }
-            savedPathsHash = binding.myCanvas.getDrawingHashCode()
         }
     }
 
@@ -383,7 +390,6 @@ class MainActivity : SimpleActivity(), CanvasListener {
 
     private fun openPath(path: String) = when {
         path.endsWith(".svg") -> {
-            binding.myCanvas.mBackgroundBitmap = null
             Svg.loadSvg(this, File(path), binding.myCanvas)
             defaultExtension = SVG
             true
@@ -408,7 +414,6 @@ class MainActivity : SimpleActivity(), CanvasListener {
             ?: intent.type ?: contentResolver.getType(uri)
         return when (type) {
             "svg", "image/svg+xml" -> {
-                binding.myCanvas.mBackgroundBitmap = null
                 Svg.loadSvg(this, uri, binding.myCanvas)
                 defaultExtension = SVG
                 true
@@ -545,7 +550,8 @@ class MainActivity : SimpleActivity(), CanvasListener {
     private fun saveToOutputStream(
         outputStream: OutputStream?,
         format: Bitmap.CompressFormat,
-        finishAfterSaving: Boolean
+        finishAfterSaving: Boolean,
+        onSaved: (Long) -> Unit = {}
     ) {
         if (outputStream == null) {
             toast(R.string.unknown_error_occurred)
@@ -558,13 +564,21 @@ class MainActivity : SimpleActivity(), CanvasListener {
             70
         }
 
-        outputStream.use {
-            binding.myCanvas.getBitmap().compress(format, quality, it)
-        }
-
-        if (finishAfterSaving) {
-            setResult(Activity.RESULT_OK)
-            finish()
+        binding.myCanvas.whenDrawingReady {
+            try {
+                outputStream.use {
+                    if (!binding.myCanvas.getBitmap(false).compress(format, quality, it)) {
+                        throw IOException("Failed to encode drawing")
+                    }
+                }
+                onSaved(binding.myCanvas.getDrawingHashCode())
+                if (finishAfterSaving) {
+                    setResult(RESULT_OK)
+                    finish()
+                }
+            } catch (e: IOException) {
+                showErrorToast(e)
+            }
         }
     }
 
@@ -612,7 +626,6 @@ class MainActivity : SimpleActivity(), CanvasListener {
             defaultExtension = defaultExtension,
             hidePath = false
         ) { fullPath, filename, extension ->
-            savedPathsHash = binding.myCanvas.getDrawingHashCode()
             saveFile(fullPath)
             defaultPath = fullPath.getParentPath()
             defaultFilename = filename
@@ -623,37 +636,38 @@ class MainActivity : SimpleActivity(), CanvasListener {
     }
 
     private fun saveFile(path: String) {
-        when (path.getFilenameExtension()) {
-            SVG -> Svg.saveSvg(this, path, binding.myCanvas)
-            else -> saveImageFile(path)
+        val onSaved: (Long) -> Unit = {
+            savedPathsHash = it
+            rescanPaths(arrayListOf(path)) {}
         }
-        rescanPaths(arrayListOf(path)) {}
+        when (path.getFilenameExtension()) {
+            SVG -> Svg.saveSvg(this, path, binding.myCanvas, onSaved)
+            else -> saveImageFile(path, onSaved)
+        }
     }
 
-    private fun saveImageFile(path: String) {
+    private fun saveImageFile(path: String, onSaved: (Long) -> Unit) {
         val fileDirItem = FileDirItem(path, path.getFilenameFromPath())
         getFileOutputStream(fileDirItem, true) {
             if (it != null) {
-                writeToOutputStream(path, it)
-                toast(R.string.file_saved)
+                saveToOutputStream(it, path.getCompressionFormat(), false) { hash ->
+                    onSaved(hash)
+                    toast(R.string.file_saved)
+                }
             } else {
                 toast(R.string.unknown_error_occurred)
             }
         }
     }
 
-    private fun writeToOutputStream(path: String, out: OutputStream) {
-        out.use {
-            binding.myCanvas.getBitmap().compress(path.getCompressionFormat(), 70, out)
-        }
-    }
-
     private fun shareImage() {
-        getImagePath(binding.myCanvas.getBitmap()) {
-            if (it != null) {
-                sharePathIntent(it, BuildConfig.APPLICATION_ID)
-            } else {
-                toast(R.string.unknown_error_occurred)
+        binding.myCanvas.whenDrawingReady {
+            getImagePath(binding.myCanvas.getBitmap(false)) {
+                if (it != null) {
+                    sharePathIntent(it, BuildConfig.APPLICATION_ID)
+                } else {
+                    toast(R.string.unknown_error_occurred)
+                }
             }
         }
     }
@@ -718,6 +732,12 @@ class MainActivity : SimpleActivity(), CanvasListener {
     }
 
     fun setBackgroundColor(pickedColor: Int) {
+        updateBackgroundControls(pickedColor)
+        binding.myCanvas.updateBackgroundColor(pickedColor)
+        defaultExtension = PNG
+    }
+
+    fun updateBackgroundControls(pickedColor: Int) {
         if (isEyeDropperOn) {
             eyeDropperClicked()
         }
@@ -733,8 +753,6 @@ class MainActivity : SimpleActivity(), CanvasListener {
                 strokeWidthBar.setColors(0, contrastColor, 0)
             }
 
-            myCanvas.updateBackgroundColor(pickedColor)
-            defaultExtension = PNG
             getBrushPreviewView().setStroke(getBrushStrokeSize(), contrastColor)
         }
     }
@@ -789,7 +807,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
     private fun updateBrushSize() {
         binding.apply {
             myCanvas.setBrushSize(brushSize)
-            val scale = Math.max(0.03f, brushSize / 100f)
+            val scale = max(0.03f, brushSize / 100f)
             strokeWidthPreview.scaleX = scale
             strokeWidthPreview.scaleY = scale
         }
@@ -798,10 +816,12 @@ class MainActivity : SimpleActivity(), CanvasListener {
     private fun printImage() {
         val printHelper = PrintHelper(this)
         printHelper.scaleMode = PrintHelper.SCALE_MODE_FIT
-        try {
-            printHelper.printBitmap(getString(R.string.app_name), binding.myCanvas.getBitmap())
-        } catch (e: Exception) {
-            showErrorToast(e)
+        binding.myCanvas.whenDrawingReady {
+            try {
+                printHelper.printBitmap(getString(R.string.app_name), binding.myCanvas.getBitmap(false))
+            } catch (e: Exception) {
+                showErrorToast(e)
+            }
         }
     }
 
