@@ -403,6 +403,7 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
         val touchedY = mLastTouchY.toInt()
         if (!contains(touchedX, touchedY)) return
 
+        // apply same transformation as in onDraw()
         val toScreen = Matrix().apply {
             preTranslate(mPosX, mPosY)
             preScale(mScaleFactor, mScaleFactor, mCenter!!.x, mCenter!!.y)
