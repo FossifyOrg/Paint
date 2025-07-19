@@ -9,4 +9,6 @@
     <string name="allow_zooming_moving_canvas">Povoliť približovanie a hýbanie plátna gestami</string>
     <string name="clear">Vymazať</string>
     <string name="change_background_color">Zmeniť farbu pozadia</string>
+    <string name="app_launcher_name">Kreslenie</string>
+    <string name="use_relative_brush_size">Prispôsobiť veľkosť štetca závisle od priblíženia</string>
 </resources>
