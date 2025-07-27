@@ -8,7 +8,6 @@
     <string name="allow_zooming_moving_canvas">Tillad zoom og flytning af lærredet med gestures</string>
     <string name="clear">Ryd</string>
     <string name="change_background_color">Skift baggrundsfarve</string>
-    <string name="app_launcher_name"></string>
     <string name="bucket_fill">Udfyld med farve</string>
     <string name="use_relative_brush_size">Juster penselstørrelsen baseret på zoomniveau</string>
 </resources>
