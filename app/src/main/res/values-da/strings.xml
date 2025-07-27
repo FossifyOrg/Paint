@@ -3,9 +3,12 @@
     <string name="open_file">Åbn fil</string>
     <string name="eraser">Viskelæder</string>
     <string name="eyedropper">Pipette</string>
-    <string name="failed_to_load_image">Det mislykkedes at indlæse billedet %s</string>
-    <string name="show_brush_size">Vis regulering af stregtykkelse</string>
+    <string name="failed_to_load_image">Kunne ikke indlæse billedet %s</string>
+    <string name="show_brush_size">Vis penselstørrelsesværktøj</string>
     <string name="allow_zooming_moving_canvas">Tillad zoom og flytning af lærredet med gestures</string>
     <string name="clear">Ryd</string>
     <string name="change_background_color">Skift baggrundsfarve</string>
+    <string name="app_launcher_name"></string>
+    <string name="bucket_fill">Udfyld med farve</string>
+    <string name="use_relative_brush_size">Juster penselstørrelsen baseret på zoomniveau</string>
 </resources>
