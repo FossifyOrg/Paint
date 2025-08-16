@@ -9,4 +9,5 @@
     <string name="allow_zooming_moving_canvas">ジェスチャーによるキャンバスの移動と拡大を許可する</string>
     <string name="clear">消去</string>
     <string name="change_background_color">背景色を変更する</string>
+    <string name="app_launcher_name">ペイント</string>
 </resources>
