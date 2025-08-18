@@ -10,4 +10,5 @@
     <string name="change_background_color">Ŝanĝi fonan koloron</string>
     <string name="bucket_fill">Plenigi</string>
     <string name="app_launcher_name">Pentri</string>
+    <string name="use_relative_brush_size">Modifi brosan grandecon laŭ zomnivelon</string>
 </resources>

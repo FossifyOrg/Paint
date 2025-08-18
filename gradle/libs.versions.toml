@@ -1,27 +1,26 @@
 [versions]
 #jetbrains
-kotlin = "1.9.25"
+kotlin = "2.2.10"
 #Detekt
-detekt = "1.23.3"
+detekt = "1.23.8"
+detektCompose = "0.4.27"
 #AndroidX
-androidx-print = "1.0.0"
+androidx-print = "1.1.0"
 #Fossify
-commons = "1.0.0"
+commons = "4.4.2"
 #Gradle
-gradlePlugins-agp = "8.9.2"
+gradlePlugins-agp = "8.12.0"
 #build
 app-build-compileSDKVersion = "34"
 app-build-targetSDK = "34"
 app-build-minimumSDK = "26"
 app-build-javaVersion = "VERSION_17"
 app-build-kotlinJVMTarget = "17"
-#versioning
-app-version-appId = "org.fossify.paint"
-app-version-versionCode = "2"
-app-version-versionName = "1.1.0"
 [libraries]
 #AndroidX
 androidx-print = { module = "androidx.print:print", version.ref = "androidx-print" }
+#Compose
+compose-detekt = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektCompose" }
 #Fossify
 fossify-commons = { module = "org.fossify:commons", version.ref = "commons" }
 [plugins]

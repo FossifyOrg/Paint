@@ -9,4 +9,6 @@
     <string name="allow_zooming_moving_canvas">Αποδοχή μεγέθυνσης &amp; μετακίνηση καμβά με χειρονομίες</string>
     <string name="clear">Καθαρισμός</string>
     <string name="change_background_color">Αλλαγή χρώματος παρασκηνίου</string>
+    <string name="app_launcher_name">Μπογιά</string>
+    <string name="use_relative_brush_size">Προσαρμογή μεγέθους πινέλου με βάση το επίπεδο ζουμ</string>
 </resources>

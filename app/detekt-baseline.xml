@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>ComplexCondition:MainActivity.kt$MainActivity$requestCode == PICK_IMAGE_INTENT &amp;&amp; resultCode == Activity.RESULT_OK &amp;&amp; resultData != null &amp;&amp; resultData.data != null</ID>
     <ID>ComplexCondition:MainActivity.kt$MainActivity$requestCode == SAVE_IMAGE_INTENT &amp;&amp; resultCode == Activity.RESULT_OK &amp;&amp; resultData != null &amp;&amp; resultData.data != null</ID>
@@ -8,35 +8,23 @@
     <ID>ConstructorParameterNaming:VectorFloodFiller.kt$VectorFloodFiller.FloodFillRange$var Y: Int</ID>
     <ID>CyclomaticComplexMethod:MyCanvas.kt$MyCanvas$override fun onTouchEvent(event: MotionEvent): Boolean</ID>
     <ID>EmptyCatchBlock:MainActivity.kt$MainActivity${ }</ID>
-    <ID>LongMethod:MyCanvas.kt$MyCanvas$override fun onTouchEvent(event: MotionEvent): Boolean</ID>
+    <ID>LargeClass:MainActivity.kt$MainActivity : SimpleActivityCanvasListener</ID>
     <ID>MagicNumber:Config.kt$Config$40f</ID>
     <ID>MagicNumber:MainActivity.kt$MainActivity$0.03f</ID>
     <ID>MagicNumber:MainActivity.kt$MainActivity$100</ID>
     <ID>MagicNumber:MainActivity.kt$MainActivity$100f</ID>
     <ID>MagicNumber:MainActivity.kt$MainActivity$5f</ID>
     <ID>MagicNumber:MainActivity.kt$MainActivity$70</ID>
-    <ID>MagicNumber:MyCanvas.kt$MyCanvas$1000</ID>
     <ID>MagicNumber:MyCanvas.kt$MyCanvas$100f</ID>
-    <ID>MagicNumber:MyCanvas.kt$MyCanvas$20f</ID>
     <ID>MagicNumber:MyCanvas.kt$MyCanvas.ScaleListener$0.1f</ID>
     <ID>MagicNumber:MyCanvas.kt$MyCanvas.ScaleListener$10.0f</ID>
     <ID>MagicNumber:VectorFloodFiller.kt$VectorFloodFiller$0xff</ID>
     <ID>MagicNumber:VectorFloodFiller.kt$VectorFloodFiller$16</ID>
     <ID>MagicNumber:VectorFloodFiller.kt$VectorFloodFiller$8</ID>
-    <ID>MaxLineLength:MainActivity.kt$MainActivity$SaveImageDialog</ID>
     <ID>MaxLineLength:MainActivity.kt$MainActivity$if</ID>
-    <ID>MaxLineLength:MainActivity.kt$MainActivity$private</ID>
-    <ID>MaxLineLength:MainActivity.kt$MainActivity$requestedOrientation = if (config.forcePortraitMode) ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED</ID>
-    <ID>MaxLineLength:MainActivity.kt$MainActivity$val type = mime.getExtensionFromMimeType(contentResolver.getType(uri)) ?: intent.type ?: contentResolver.getType(uri)</ID>
     <ID>MaxLineLength:MainActivity.kt$MainActivity$}</ID>
     <ID>MaxLineLength:MyCanvas.kt$MyCanvas$if</ID>
-    <ID>MaxLineLength:MyCanvas.kt$MyCanvas$mPaintOptions.strokeWidth = resources.getDimension(R.dimen.full_brush_size) * (mCurrBrushSize / mScaleFactor / 100f)</ID>
-    <ID>MaxLineLength:MyCanvas.kt$MyCanvas$val path = bitmap.vectorFloodFill(color = color, x = touchedX, y = touchedY, tolerance = FLOOD_FILL_TOLERANCE)</ID>
-    <ID>MaxLineLength:SaveImageDialog.kt$SaveImageDialog$val title = String.format(activity.getString(R.string.file_already_exists_overwrite), newPath.getFilenameFromPath())</ID>
     <ID>MaxLineLength:SettingsActivity.kt$SettingsActivity$settingsUseEnglishHolder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") &amp;&amp; !isTiramisuPlus())</ID>
-    <ID>MaxLineLength:SettingsActivity.kt$SettingsActivity$updateMaterialActivityViews(settingsCoordinator, settingsHolder, useTransparentNavigation = true, useTopSearchMenu = false)</ID>
-    <ID>MaxLineLength:Svg.kt$Svg$private</ID>
-    <ID>MaxLineLength:Svg.kt$Svg$write("&lt;rect width=\"$width\" height=\"$height\" fill=\"#${Integer.toHexString(backgroundColor).substring(2)}\"/&gt;")</ID>
     <ID>MaxLineLength:VectorFloodFiller.kt$VectorFloodFiller$// if we're not below the bottom of the bitmap and the pixel below this one is within the color tolerance</ID>
     <ID>MaxLineLength:VectorFloodFiller.kt$VectorFloodFiller$return red &gt;= startColorRed - tolerance &amp;&amp; red &lt;= startColorRed + tolerance &amp;&amp; green &gt;= startColorGreen - tolerance &amp;&amp; green &lt;= startColorGreen + tolerance &amp;&amp; blue &gt;= startColorBlue - tolerance &amp;&amp; blue &lt;= startColorBlue + tolerance</ID>
     <ID>NestedBlockDepth:MyPath.kt$MyPath$fun readObject(pathData: String, activity: Activity)</ID>
@@ -58,12 +46,6 @@
     <ID>UnusedPrivateMember:MyPath.kt$MyPath$private fun readObject(inputStream: ObjectInputStream)</ID>
     <ID>VariableNaming:MyCanvas.kt$MyCanvas$private val FLOOD_FILL_TOLERANCE = 1</ID>
     <ID>VariableNaming:MyCanvas.kt$MyCanvas$private val MAX_HISTORY_COUNT = 1000</ID>
-    <ID>VariableNaming:MyCanvas.kt$MyCanvas$private val MIN_ERASER_WIDTH = 20f</ID>
     <ID>VariableNaming:SaveImageDialog.kt$SaveImageDialog$private val SIMPLE_DRAW = "Fossify Paint"</ID>
-    <ID>WildcardImport:MainActivity.kt$import org.fossify.commons.extensions.*</ID>
-    <ID>WildcardImport:MyCanvas.kt$import android.graphics.*</ID>
-    <ID>WildcardImport:MyCanvas.kt$import org.fossify.paint.extensions.*</ID>
-    <ID>WildcardImport:SaveImageDialog.kt$import org.fossify.commons.extensions.*</ID>
-    <ID>WildcardImport:Svg.kt$import java.io.*</ID>
   </CurrentIssues>
 </SmellBaseline>

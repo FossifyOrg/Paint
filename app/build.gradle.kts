@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.FileInputStream
@@ -25,11 +26,11 @@ android {
     compileSdk = project.libs.versions.app.build.compileSDKVersion.get().toInt()
 
     defaultConfig {
-        applicationId = libs.versions.app.version.appId.get()
+        applicationId = project.property("APP_ID").toString()
         minSdk = project.libs.versions.app.build.minimumSDK.get().toInt()
         targetSdk = project.libs.versions.app.build.targetSDK.get().toInt()
-        versionName = project.libs.versions.app.version.versionName.get()
-        versionCode = project.libs.versions.app.version.versionCode.get().toInt()
+        versionName = project.property("VERSION_NAME").toString()
+        versionCode = project.property("VERSION_CODE").toString().toInt()
         setProperty("archivesBaseName", "paint-$versionCode")
         vectorDrawables.useSupportLibrary = true
     }
@@ -98,17 +99,25 @@ android {
         includeInApk = false
     }
 
-    tasks.withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = project.libs.versions.app.build.kotlinJVMTarget.get()
+    androidResources {
+        @Suppress("UnstableApiUsage")
+        generateLocaleConfig = true
     }
 
-    namespace = libs.versions.app.version.appId.get()
+    tasks.withType<KotlinCompile> {
+        compilerOptions.jvmTarget.set(
+            JvmTarget.fromTarget(project.libs.versions.app.build.kotlinJVMTarget.get())
+        )
+    }
+
+    namespace = project.property("APP_ID").toString()
 
     lint {
         checkReleaseBuilds = false
         abortOnError = true
-        warningsAsErrors = true
+        warningsAsErrors = false
         baseline = file("lint-baseline.xml")
+        lintConfig = rootProject.file("lint.xml")
     }
 
     bundle {
@@ -120,9 +129,13 @@ android {
 
 detekt {
     baseline = file("detekt-baseline.xml")
+    config.setFrom("$rootDir/detekt.yml")
+    buildUponDefaultConfig = true
+    allRules = false
 }
 
 dependencies {
     implementation(libs.fossify.commons)
     implementation(libs.androidx.print)
+    detektPlugins(libs.compose.detekt)
 }

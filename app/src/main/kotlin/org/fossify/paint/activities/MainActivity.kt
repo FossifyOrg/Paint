@@ -340,10 +340,12 @@ class MainActivity : SimpleActivity(), CanvasListener {
         if (intent?.action == Intent.ACTION_EDIT) {
             val data = intent.data
             val output = intent.extras?.get(MediaStore.EXTRA_OUTPUT)
-            if (data != null && output != null && output is Uri) {
+            if (data != null) {
                 tryOpenUri(data, intent)
                 isEditIntent = true
-                intentUri = output
+                if (output != null && output is Uri) {
+                    intentUri = output
+                }
             }
         }
     }
@@ -508,7 +510,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
 
     private fun confirmImage() {
         when {
-            isEditIntent -> {
+            isEditIntent && intentUri != null -> {
                 try {
                     val outputStream = contentResolver.openOutputStream(intentUri!!)
                     saveToOutputStream(outputStream, defaultPath.getCompressionFormat(), true)
@@ -516,6 +518,8 @@ class MainActivity : SimpleActivity(), CanvasListener {
                     showErrorToast(e)
                 }
             }
+
+            isEditIntent -> trySaveImage()
 
             intentUri?.scheme == "content" -> {
                 val outputStream = contentResolver.openOutputStream(intentUri!!)

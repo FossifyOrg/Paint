@@ -10,4 +10,5 @@
     <string name="clear">Limpiar</string>
     <string name="change_background_color">Cambiar color de fondo</string>
     <string name="app_launcher_name">Pintar</string>
+    <string name="use_relative_brush_size">Ajustar tamaño de pincel según el nivel de zum</string>
 </resources>
