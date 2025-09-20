@@ -9,4 +9,5 @@
     <string name="allow_zooming_moving_canvas">Tillat å zoome og flytte tegneflaten med fingerbevegelser</string>
     <string name="clear">Slett</string>
     <string name="change_background_color">Endre bakgrunnsfarge</string>
+    <string name="use_relative_brush_size">Juster penselstørrelsen basert på zoomnivået</string>
 </resources>
