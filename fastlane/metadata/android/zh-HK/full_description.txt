@@ -1,0 +1,16 @@
+Fossify Paint 是您輕鬆繪製草圖和創意表達的首選應用程式。無論您是想塗鴉一些有趣的東西或是製作詳細的數位藝術，Fossify Paint 都能為您提供完全的控制，同時尊重您的私隱。<br><br>
+<b>✏️快速簡單的草圖繪製：</b><br>
+立即開始繪圖－無需繁複的設定或進階工具。只需選擇畫筆大小，選擇顏色，然後在乾淨的數位畫布上將您的想法變為現實。<br><br>
+<b>🎨完全可自訂的藝術空間：</b><br>
+可自訂您繪畫體驗的各個方面。使用十六進制代碼變更畫布背景、調整畫筆大小並精確微調顏色。<br><br>
+<b>🖼️ 多種檔案格式：</b><br>
+Fossify Paint 支援流行的格式，如 PNG、JPG 和 SVG。無論您是儲存簡單的草圖還是分享詳細的圖稿，您都可以輕鬆地以適合您需求的格式匯出您的創作。<br><br>
+<b>🛡️內建私隱與安全：</b><br>
+與所有 Fossify 應用程式一樣，Fossify Paint 完全離線工作，沒有侵入性權限。您的作品安全地保存在您的裝置上，讓您高枕無憂。<br><br>
+<b>🌐開源承諾：</b><br>
+Fossify Paint 是開源且透明的。探索 GitHub 上的程式碼，為專案做出貢獻，並成為重視私隱和創造力的社群的一部分。<br><br>
+Fossify Paint 迎合所有年齡層和技能水平的藝術家——創作、客製化和分享您的藝術作品，同時保持您的私隱完好無損。<br><br>
+探索更多 Fossify 應用程式：https://www.fossify.org<br>
+開源程式碼：https://www.github.com/FossifyOrg<br>
+加入 Reddit 社群：https://www.reddit.com/r/Fossify<br>
+透過 Telegram 連接：https://t.me/Fossify<br>
