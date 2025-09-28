@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="open_file">開啟檔案</string>
+    <string name="app_launcher_name">繪畫</string>
+    <string name="eraser">擦膠</string>
+    <string name="eyedropper">取色工具</string>
+    <string name="bucket_fill">填滿顏色</string>
+    <string name="failed_to_load_image">無法載入圖片 %s</string>
+    <string name="show_brush_size">顯示畫筆尺寸工具</string>
+    <string name="allow_zooming_moving_canvas">允許使用手勢縮放或移動畫布</string>
+    <string name="use_relative_brush_size">根據縮放層級調整筆刷大小</string>
+    <string name="clear">清除</string>
+    <string name="change_background_color">更改背背景顏色</string>
 </resources>
