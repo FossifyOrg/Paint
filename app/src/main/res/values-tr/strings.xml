@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="open_file">Dosya aç</string>
-    <string name="eraser">Silici</string>
+    <string name="eraser">Silgi</string>
     <string name="eyedropper">Renk seçici</string>
     <string name="bucket_fill">Kova dolgusu</string>
     <string name="failed_to_load_image">%s resmi yüklenemedi</string>
