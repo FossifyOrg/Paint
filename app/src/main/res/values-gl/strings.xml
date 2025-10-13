@@ -9,4 +9,6 @@
     <string name="allow_zooming_moving_canvas">Permite facer zoom e mover o lenzo cos xestos</string>
     <string name="clear">Limpar</string>
     <string name="change_background_color">Cambiar a cor do fondo</string>
+    <string name="app_launcher_name">Pintar</string>
+    <string name="use_relative_brush_size">Axustar o tamaño do pincel segundo o nivel de zoom</string>
 </resources>
