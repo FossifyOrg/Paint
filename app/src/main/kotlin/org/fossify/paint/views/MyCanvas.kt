@@ -89,7 +89,10 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
             isAntiAlias = true
         }
 
-        mScaleDetector = ScaleGestureDetector(context, ScaleListener())
+        mScaleDetector = ScaleGestureDetector(context, ScaleListener()).apply {
+            isQuickScaleEnabled = false
+        }
+
         updateUndoVisibility()
     }
 
