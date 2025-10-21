@@ -103,6 +103,10 @@ class MainActivity : SimpleActivity(), CanvasListener {
         setupOptionsMenu()
         refreshMenuItems()
 
+        setupEdgeToEdge(
+            padBottomSystem = listOf(binding.mainScrollview, binding.strokeWidthBar),
+        )
+
         eyeDropper = EyeDropper(binding.myCanvas) { selectedColor ->
             setColor(selectedColor)
         }
@@ -163,7 +167,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
 
     override fun onResume() {
         super.onResume()
-        setupTopAppBar(binding.mainToolbar, statusBarColor = getProperBackgroundColor())
+        setupTopAppBar(binding.mainAppbar, topBarColor = getProperBackgroundColor())
 
         binding.apply {
             val isShowBrushSizeEnabled = config.showBrushSize
