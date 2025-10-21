@@ -163,7 +163,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(binding.mainToolbar, statusBarColor = getProperBackgroundColor())
+        setupTopAppBar(binding.mainToolbar, statusBarColor = getProperBackgroundColor())
 
         binding.apply {
             val isShowBrushSizeEnabled = config.showBrushSize
