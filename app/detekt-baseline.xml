@@ -28,7 +28,6 @@
     <ID>MaxLineLength:VectorFloodFiller.kt$VectorFloodFiller$// if we're not below the bottom of the bitmap and the pixel below this one is within the color tolerance</ID>
     <ID>MaxLineLength:VectorFloodFiller.kt$VectorFloodFiller$return red &gt;= startColorRed - tolerance &amp;&amp; red &lt;= startColorRed + tolerance &amp;&amp; green &gt;= startColorGreen - tolerance &amp;&amp; green &lt;= startColorGreen + tolerance &amp;&amp; blue &gt;= startColorBlue - tolerance &amp;&amp; blue &lt;= startColorBlue + tolerance</ID>
     <ID>NestedBlockDepth:MyPath.kt$MyPath$fun readObject(pathData: String, activity: Activity)</ID>
-    <ID>ReturnCount:MyCanvas.kt$MyCanvas$override fun onTouchEvent(event: MotionEvent): Boolean</ID>
     <ID>SerialVersionUIDInSerializableClass:MyPath.kt$MyPath : PathSerializable</ID>
     <ID>SerialVersionUIDInSerializableClass:Svg.kt$Svg$SPath : Serializable</ID>
     <ID>SerialVersionUIDInSerializableClass:Svg.kt$Svg$SRect : Serializable</ID>
