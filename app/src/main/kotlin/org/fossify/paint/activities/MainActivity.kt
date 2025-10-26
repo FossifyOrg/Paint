@@ -103,6 +103,10 @@ class MainActivity : SimpleActivity(), CanvasListener {
         setupOptionsMenu()
         refreshMenuItems()
 
+        setupEdgeToEdge(
+            padBottomSystem = listOf(binding.mainScrollview, binding.strokeWidthBar),
+        )
+
         eyeDropper = EyeDropper(binding.myCanvas) { selectedColor ->
             setColor(selectedColor)
         }
@@ -163,7 +167,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(binding.mainToolbar, statusBarColor = getProperBackgroundColor())
+        setupTopAppBar(binding.mainAppbar, topBarColor = getProperBackgroundColor())
 
         binding.apply {
             val isShowBrushSizeEnabled = config.showBrushSize
@@ -234,7 +238,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
         }
     }
 
-    override fun onBackPressed() {
+    override fun onBackPressedCompat(): Boolean {
         val hasUnsavedChanges = savedPathsHash != binding.myCanvas.getDrawingHashCode()
         if (hasUnsavedChanges && System.currentTimeMillis() - lastSavePromptTS > SAVE_DISCARD_PROMPT_INTERVAL) {
             lastSavePromptTS = System.currentTimeMillis()
@@ -248,12 +252,12 @@ class MainActivity : SimpleActivity(), CanvasListener {
                 if (it) {
                     trySaveImage()
                 } else {
-                    super.onBackPressed()
+                    performDefaultBack()
                 }
             }
-        } else {
-            super.onBackPressed()
+            return true
         }
+        return false
     }
 
     private fun launchSettings() {
