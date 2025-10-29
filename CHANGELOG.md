@@ -6,9 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2025-10-29
 ### Changed
-
 - Compatibility updates for Android 15 & 16
+- Updated translations
 
 ## [1.1.2] - 2025-10-18
 ### Changed
@@ -42,7 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#76]: https://github.com/FossifyOrg/Paint/issues/76
 [#106]: https://github.com/FossifyOrg/Paint/issues/106
 
-[Unreleased]: https://github.com/FossifyOrg/Paint/compare/1.1.2...HEAD
+[Unreleased]: https://github.com/FossifyOrg/Paint/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/FossifyOrg/Paint/compare/1.1.2...1.2.0
 [1.1.2]: https://github.com/FossifyOrg/Paint/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/FossifyOrg/Paint/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/FossifyOrg/Paint/compare/1.0.0...1.1.0
