@@ -11,4 +11,5 @@
     <string name="bucket_fill">Opvullen</string>
     <string name="app_launcher_name">Tekenen</string>
     <string name="use_relative_brush_size">Penceelgrootte aanpassen op basis van zoomniveau</string>
+    <string name="clear_canvas_confirmation">Het hele canvas wissen?</string>
 </resources>
