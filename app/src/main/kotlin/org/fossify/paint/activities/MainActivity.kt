@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.print.PrintHelper
 import org.fossify.commons.dialogs.ColorPickerDialog
 import org.fossify.commons.dialogs.ConfirmationAdvancedDialog
+import org.fossify.commons.dialogs.ConfirmationDialog
 import org.fossify.commons.extensions.appLaunched
 import org.fossify.commons.extensions.applyColorFilter
 import org.fossify.commons.extensions.beGoneIf
@@ -73,6 +74,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
         private const val FILE_NAME = "simple-paint.png"
         private const val BITMAP_PATH = "bitmap_path"
         private const val URI_TO_LOAD = "uri_to_load"
+        private const val HAS_CONTENT = "has_content"
     }
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
@@ -95,6 +97,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
     private var isImageCaptureIntent = false
     private var isEditIntent = false
     private var lastBitmapPath = ""
+    private var hasContent = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -225,7 +228,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
                 R.id.menu_confirm -> confirmImage()
                 R.id.menu_save -> trySaveImage()
                 R.id.menu_share -> shareImage()
-                R.id.clear -> clearCanvas()
+                R.id.clear -> displayClearCanvasPrompt()
                 R.id.open_file -> tryOpenFile()
                 R.id.change_background -> changeBackgroundClicked()
                 R.id.menu_print -> printImage()
@@ -684,6 +687,16 @@ class MainActivity : SimpleActivity(), CanvasListener {
         }
     }
 
+    private fun displayClearCanvasPrompt() {
+        if (hasContent) {
+            ConfirmationDialog(this, messageId = R.string.clear_canvas_confirmation) {
+                clearCanvas()
+            }
+        } else {
+            clearCanvas()
+        }
+    }
+
     private fun clearCanvas() {
         uriToLoad = null
         binding.myCanvas.clearCanvas()
@@ -748,10 +761,14 @@ class MainActivity : SimpleActivity(), CanvasListener {
         binding.redo.beVisibleIf(visible)
     }
 
+    override fun toggleHasContent(hasContent: Boolean) {
+        this.hasContent = hasContent
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(BITMAP_PATH, lastBitmapPath)
-
+        outState.putBoolean(HAS_CONTENT, hasContent)
         if (uriToLoad != null) {
             outState.putString(URI_TO_LOAD, uriToLoad.toString())
         }
@@ -760,6 +777,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         lastBitmapPath = savedInstanceState.getString(BITMAP_PATH)!!
+        hasContent = savedInstanceState.getBoolean(HAS_CONTENT, false)
         if (lastBitmapPath.isNotEmpty()) {
             openPath(lastBitmapPath)
         } else if (savedInstanceState.containsKey(URI_TO_LOAD)) {

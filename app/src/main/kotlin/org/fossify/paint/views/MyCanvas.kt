@@ -250,6 +250,7 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
             mBackgroundBitmap = mLastBackgroundBitmap
             mLastOperations.clear()
             updateUndoVisibility()
+            updateClearConfirmation()
             invalidate()
             return
         }
@@ -333,6 +334,7 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 mBackgroundBitmap = builder.get()
                 activity.runOnUiThread {
                     invalidate()
+                    updateClearConfirmation()
                 }
             } catch (e: ExecutionException) {
                 val errorMsg =
@@ -353,7 +355,10 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
         mBackgroundBitmap = null
         mPath.reset()
         mOperations.clear()
+        mUndoneOperations.clear()
         updateUndoVisibility()
+        updateRedoVisibility(false)
+        updateClearConfirmation()
         invalidate()
     }
 
@@ -378,6 +383,7 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
         }
 
         updateUndoVisibility()
+        updateClearConfirmation()
         mPath = MyPath()
         mPaintOptions =
             PaintOptions(mPaintOptions.color, mPaintOptions.strokeWidth, mPaintOptions.isEraser)
@@ -386,6 +392,7 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun updateUndoRedoVisibility() {
         updateUndoVisibility()
         updateRedoVisibility()
+        updateClearConfirmation()
     }
 
     private fun updateUndoVisibility() {
@@ -394,6 +401,11 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun updateRedoVisibility(visible: Boolean = mUndoneOperations.isNotEmpty()) {
         mListener?.toggleRedoVisibility(visible)
+    }
+
+    private fun updateClearConfirmation() {
+        val hasContent = mBackgroundBitmap != null || mOperations.isNotEmpty()
+        mListener?.toggleHasContent(hasContent)
     }
 
     private fun bucketFill() {
@@ -436,6 +448,7 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
         while (mOperations.size > MAX_HISTORY_COUNT) {
             mOperations.removeFirst()
         }
+        updateClearConfirmation()
     }
 
     fun getPathsMap() = mOperations
