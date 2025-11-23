@@ -404,7 +404,7 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun updateClearConfirmation(edited: Boolean) {
-        mListener?.toggleClearConfirmation(edited)
+        mListener?.toggleHasContent(edited)
     }
 
     private fun bucketFill() {

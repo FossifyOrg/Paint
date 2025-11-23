@@ -74,6 +74,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
         private const val FILE_NAME = "simple-paint.png"
         private const val BITMAP_PATH = "bitmap_path"
         private const val URI_TO_LOAD = "uri_to_load"
+        private const val HAS_CONTENT = "has_content"
     }
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
@@ -96,7 +97,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
     private var isImageCaptureIntent = false
     private var isEditIntent = false
     private var lastBitmapPath = ""
-    private var isEdited = false
+    private var hasContent = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -687,7 +688,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
     }
 
     private fun displayClearCanvasPrompt() {
-        if (isEdited) {
+        if (hasContent) {
             ConfirmationDialog(this, messageId = R.string.clear_canvas_confirmation) {
                 clearCanvas()
             }
@@ -760,14 +761,14 @@ class MainActivity : SimpleActivity(), CanvasListener {
         binding.redo.beVisibleIf(visible)
     }
 
-    override fun toggleClearConfirmation(edited: Boolean) {
-        isEdited = edited
+    override fun toggleHasContent(hasContent: Boolean) {
+        this.hasContent = hasContent
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(BITMAP_PATH, lastBitmapPath)
-
+        outState.putBoolean(HAS_CONTENT, hasContent)
         if (uriToLoad != null) {
             outState.putString(URI_TO_LOAD, uriToLoad.toString())
         }
@@ -776,6 +777,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         lastBitmapPath = savedInstanceState.getString(BITMAP_PATH)!!
+        hasContent = savedInstanceState.getBoolean(HAS_CONTENT, false)
         if (lastBitmapPath.isNotEmpty()) {
             openPath(lastBitmapPath)
         } else if (savedInstanceState.containsKey(URI_TO_LOAD)) {

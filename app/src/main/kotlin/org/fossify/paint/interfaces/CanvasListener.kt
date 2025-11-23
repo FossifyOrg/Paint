@@ -5,5 +5,5 @@ interface CanvasListener {
 
     fun toggleRedoVisibility(visible: Boolean)
 
-    fun toggleClearConfirmation(edited: Boolean)
+    fun toggleHasContent(hasContent: Boolean)
 }
