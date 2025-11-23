@@ -11,4 +11,5 @@
     <string name="change_background_color">Vaheta taustavärvi</string>
     <string name="app_launcher_name">Maalija</string>
     <string name="use_relative_brush_size">Kohenda pintsli suurust vastavalt pildi suurendusele</string>
+    <string name="clear_canvas_confirmation">Kas sa oled kindel, et soovid lõuendi tühjendada?</string>
 </resources>
