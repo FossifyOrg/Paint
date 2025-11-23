@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.print.PrintHelper
 import org.fossify.commons.dialogs.ColorPickerDialog
 import org.fossify.commons.dialogs.ConfirmationAdvancedDialog
+import org.fossify.commons.dialogs.ConfirmationDialog
 import org.fossify.commons.extensions.appLaunched
 import org.fossify.commons.extensions.applyColorFilter
 import org.fossify.commons.extensions.beGoneIf
@@ -95,6 +96,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
     private var isImageCaptureIntent = false
     private var isEditIntent = false
     private var lastBitmapPath = ""
+    private var isEdited = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -225,7 +227,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
                 R.id.menu_confirm -> confirmImage()
                 R.id.menu_save -> trySaveImage()
                 R.id.menu_share -> shareImage()
-                R.id.clear -> clearCanvas()
+                R.id.clear -> displayClearCanvasPrompt()
                 R.id.open_file -> tryOpenFile()
                 R.id.change_background -> changeBackgroundClicked()
                 R.id.menu_print -> printImage()
@@ -684,6 +686,16 @@ class MainActivity : SimpleActivity(), CanvasListener {
         }
     }
 
+    private fun displayClearCanvasPrompt() {
+        if (isEdited) {
+            ConfirmationDialog(this, messageId = R.string.clear_canvas_confirmation) {
+                clearCanvas()
+            }
+        } else {
+            clearCanvas()
+        }
+    }
+
     private fun clearCanvas() {
         uriToLoad = null
         binding.myCanvas.clearCanvas()
@@ -746,6 +758,10 @@ class MainActivity : SimpleActivity(), CanvasListener {
 
     override fun toggleRedoVisibility(visible: Boolean) {
         binding.redo.beVisibleIf(visible)
+    }
+
+    override fun toggleClearConfirmation(edited: Boolean) {
+        isEdited = edited
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
