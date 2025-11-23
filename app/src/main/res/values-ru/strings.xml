@@ -11,4 +11,5 @@
     <string name="change_background_color">Изменить цвет фона</string>
     <string name="app_launcher_name">Рисование</string>
     <string name="use_relative_brush_size">Менять размер кисти по уровню масштабирования</string>
+    <string name="clear_canvas_confirmation">Очистить холст?</string>
 </resources>
