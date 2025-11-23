@@ -11,4 +11,5 @@
     <string name="change_background_color">Canvia el color del fons</string>
     <string name="app_launcher_name">Paint</string>
     <string name="use_relative_brush_size">Ajusta la mida del pinzell en funció del nivell de zoom</string>
+    <string name="clear_canvas_confirmation">Segur que voleu netejar el llenç?</string>
 </resources>
