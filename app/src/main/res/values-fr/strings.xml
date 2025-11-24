@@ -11,4 +11,5 @@
     <string name="change_background_color">Changer l\'arrière-plan</string>
     <string name="app_launcher_name">Paint</string>
     <string name="use_relative_brush_size">Ajuster la taille du pinceau en fonction du niveau de zoom</string>
+    <string name="clear_canvas_confirmation">Êtes-vous sûr de vouloir effacer l\'espace graphique ?</string>
 </resources>
