@@ -11,4 +11,5 @@
     <string name="allow_zooming_moving_canvas">允許使用手勢縮放或移動畫布</string>
     <string name="app_launcher_name">繪畫</string>
     <string name="use_relative_brush_size">根據縮放層級調整筆刷大小</string>
+    <string name="clear_canvas_confirmation">您確定您想要清除畫布嗎？</string>
 </resources>
