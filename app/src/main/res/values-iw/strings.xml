@@ -11,4 +11,5 @@
     <string name="bucket_fill">מילוי</string>
     <string name="app_launcher_name">צייר</string>
     <string name="use_relative_brush_size">התאמת גודל המברשת בהתאם לרמת הזום</string>
+    <string name="clear_canvas_confirmation">אתה בטוח שברצונך לנקות את בד הציור?</string>
 </resources>
