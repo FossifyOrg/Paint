@@ -11,4 +11,5 @@
     <string name="clear">Notīrīt</string>
     <string name="change_background_color">Mainīt fona krāsu</string>
     <string name="use_relative_brush_size">Pielāgot otas lielumu atbilstoši tālummaiņas līmenim</string>
+    <string name="clear_canvas_confirmation">Vai tiešām notīrīt audeklu?</string>
 </resources>
