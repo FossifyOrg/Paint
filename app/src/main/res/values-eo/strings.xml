@@ -11,4 +11,5 @@
     <string name="bucket_fill">Plenigi</string>
     <string name="app_launcher_name">Pentri</string>
     <string name="use_relative_brush_size">Modifi brosan grandecon laŭ zomnivelon</string>
+    <string name="clear_canvas_confirmation">Ĉu vi certas, ke vi volas forviŝi la kanvazon?</string>
 </resources>
