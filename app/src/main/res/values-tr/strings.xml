@@ -11,4 +11,5 @@
     <string name="change_background_color">Arka plan rengini değiştir</string>
     <string name="app_launcher_name">Çizim</string>
     <string name="use_relative_brush_size">Fırça boyutunu yakınlaştırma seviyesine göre ayarla</string>
+    <string name="clear_canvas_confirmation">Tuvali temizlemek istediğinize emin misiniz?</string>
 </resources>
