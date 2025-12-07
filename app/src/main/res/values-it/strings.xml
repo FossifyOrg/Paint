@@ -11,4 +11,5 @@
     <string name="change_background_color">Cambia colore di sfondo</string>
     <string name="app_launcher_name">Paint</string>
     <string name="use_relative_brush_size">Regola la dimensione del pennello in base al livello di zoom</string>
+    <string name="clear_canvas_confirmation">Sei sicuro di voler cancellare la tela?</string>
 </resources>
