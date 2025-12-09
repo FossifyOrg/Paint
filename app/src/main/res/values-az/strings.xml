@@ -6,4 +6,6 @@
     <string name="show_brush_size">Fırça ölçüsü alətini göstər</string>
     <string name="clear">Təmizlə</string>
     <string name="change_background_color">Arxaplan rəngini dəyiş</string>
+    <string name="app_launcher_name">Rəsm</string>
+    <string name="eyedropper">Göz damcısı</string>
 </resources>
