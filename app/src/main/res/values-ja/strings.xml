@@ -10,4 +10,6 @@
     <string name="clear">消去</string>
     <string name="change_background_color">背景色を変更する</string>
     <string name="app_launcher_name">ペイント</string>
+    <string name="clear_canvas_confirmation">キャンバスをクリアしてもよろしいですか?</string>
+    <string name="use_relative_brush_size">ズームレベルに応じてブラシサイズを調整する</string>
 </resources>
