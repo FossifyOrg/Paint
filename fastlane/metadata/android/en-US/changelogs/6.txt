@@ -1,0 +1,8 @@
+Added:
+
+• Added confirmation dialog for clearing the canvas 
+
+Changed:
+
+• Updated translations
+
