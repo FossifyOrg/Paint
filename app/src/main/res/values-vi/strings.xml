@@ -6,7 +6,7 @@
     <string name="show_brush_size">Hiển thị công cụ kích thước cọ vẽ</string>
     <string name="allow_zooming_moving_canvas">Cho phép phóng to và di chuyển tranh vẽ bằng cử chỉ</string>
     <string name="clear">Làm sạch</string>
-    <string name="open_file">Mở tập tin</string>
+    <string name="open_file">Mở tệp</string>
     <string name="eraser">Tẩy</string>
     <string name="change_background_color">Thay đổi màu nền</string>
 </resources>
