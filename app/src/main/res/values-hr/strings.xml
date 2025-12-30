@@ -11,4 +11,5 @@
     <string name="change_background_color">Promjeni boju pozadine</string>
     <string name="app_launcher_name">Boja</string>
     <string name="use_relative_brush_size">Prilagodi veličinu kista na temelju razine zumiranja</string>
+    <string name="clear_canvas_confirmation">Stvarno želiš izbrisati platno?</string>
 </resources>
