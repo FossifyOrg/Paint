@@ -10,4 +10,6 @@
     <string name="clear">Limpar</string>
     <string name="change_background_color">Alterar cor de fundo</string>
     <string name="app_launcher_name">Paint</string>
+    <string name="clear_canvas_confirmation">Tem a certeza de que quer limpar a tela?</string>
+    <string name="use_relative_brush_size">Ajustar tamanho do pincel segundo o nível de zoom</string>
 </resources>
