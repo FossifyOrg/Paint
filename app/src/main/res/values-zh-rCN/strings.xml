@@ -9,7 +9,7 @@
     <string name="allow_zooming_moving_canvas">允许使用手势缩放和移动画布</string>
     <string name="clear">清除</string>
     <string name="change_background_color">更改背景色</string>
-    <string name="app_launcher_name">Paint</string>
+    <string name="app_launcher_name">绘画</string>
     <string name="use_relative_brush_size">根据缩放级别调整画笔大小</string>
     <string name="clear_canvas_confirmation">确定要清除画板吗？</string>
 </resources>
