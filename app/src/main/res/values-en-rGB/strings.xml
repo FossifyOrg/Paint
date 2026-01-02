@@ -5,4 +5,11 @@
     <string name="eraser">Eraser</string>
     <string name="eyedropper">Eyedropper</string>
     <string name="bucket_fill">Bucket fill</string>
+    <string name="failed_to_load_image">Failed to load image %s</string>
+    <string name="clear_canvas_confirmation">Are you sure you want to clear the canvas?</string>
+    <string name="show_brush_size">Show brush size tool</string>
+    <string name="allow_zooming_moving_canvas">Allow zooming and moving the canvas with gestures</string>
+    <string name="use_relative_brush_size">Adjust brush size based on zoom level</string>
+    <string name="clear">Clear</string>
+    <string name="change_background_color">Change background colour</string>
 </resources>
