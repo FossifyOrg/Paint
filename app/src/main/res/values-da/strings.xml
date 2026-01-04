@@ -10,4 +10,5 @@
     <string name="change_background_color">Skift baggrundsfarve</string>
     <string name="bucket_fill">Udfyld med farve</string>
     <string name="use_relative_brush_size">Juster penselstørrelsen baseret på zoomniveau</string>
+    <string name="clear_canvas_confirmation">Er du sikker på, at du vil rydde canvasset?</string>
 </resources>
