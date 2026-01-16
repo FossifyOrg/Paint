@@ -11,4 +11,5 @@
     <string name="change_background_color">Alterar cor de fundo</string>
     <string name="app_launcher_name">Paint</string>
     <string name="use_relative_brush_size">Ajustar tamanho do pincel baseado no nível da ampliação</string>
+    <string name="clear_canvas_confirmation">Tem a certeza que quer limpar o ecrã?</string>
 </resources>
