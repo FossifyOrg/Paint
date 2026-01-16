@@ -1,0 +1,23 @@
+Fossify Paint é o seu aplicação para esboços sem esforço e expressão criativa. Se você quer rabiscar algo divertido ou criar arte digital detalhada, Fossify Paint é construído para dar-lhe o controle completo, respeitando a sua privacidade.
+
+✏️ DESENHO RÁPIDO & FÁCIL:
+Comece a desenhar imediatamente, sem necessidade de configuração complicada ou ferramentas avançadas. Basta escolher o tamanho do pincel, escolher a cor e dar vida às suas ideias numa tela digital limpa.
+
+🎨 ESPAÇO DE ARTE TOTALMENTE PERSONALIZÁVEL:
+Personalize todos os aspetos da sua experiência de desenho. Altere o plano de fundo da tela, ajuste o tamanho do pincel e ajuste as cores com precisão usando códigos hexadecimais.
+
+🖼️ FORMATOS DE ARQUIVO VERSÁTEIS:
+Fossify Paint suporta formatos populares como PNG, JPG e SVG. Se está a gravar um esboço simples ou compartilhando obras de arte detalhadas, você pode facilmente exportar suas criações no formato que atender às suas necessidades.
+
+🛡️ PRIVACIDADE E SEGURANÇA INTEGRADAS:
+Como em todos os aplicativos do Fossify, o Fossify Paint funciona completamente offline sem permissões intrusivas. A sua obra de arte fica segura no seu dispositivo, garantindo paz de espírito.
+
+🌐 COMPROMISSO OPEN-SOURCE:
+Fossify Paint é de código aberto e transparente. Explore o código no GitHub, contribua para o projeto e faça parte de uma comunidade que valoriza a privacidade e a criatividade.
+
+O Fossify Paint atende a artistas de todas as idades e níveis de habilidade: crie, personalize e compartilhe sua arte, mantendo sua privacidade intacta.
+
+Explore mais apps do Fossify: https://www.fossify.org
+Código aberto: https://www.github.com/FossifyOrg
+Junte-se à comunidade no Reddit: https://www.reddit.com/r/Fossify
+Conecte-se no Telegram: https://t. me/Fossify
