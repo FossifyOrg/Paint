@@ -1,0 +1,16 @@
+Fossify Maalija on sinu ideaalne rakendus lihtsaks visandamiseks ja loominguliseks eneseväljenduseks. Olenemata sellest, kas soovid lihtsalt midagi lõbusat kritseldada või luua detailset digikunsti, on Fossify Maalija loodud andma sulle täieliku kontrolli, austades samal ajal sinu privaatsust.<br><br>
+<b>✏️ KIIRE JA LIHTNE VISANDAMINE:</b><br>
+Alusta joonistamist kohe – keerulist seadistust ega profitööriistu pole vaja. Vali lihtsalt pintsli suurus, värv ja too oma ideed ellu puhtal digitaalsel lõuendil.<br><br>
+<b>🎨 TÄIELIKULT KOHANDATAV LOOMERUUM:</b><br>
+Kohanda oma joonistamiskogemuse iga üksikasja. Muuda lõuendi tausta, reguleeri pintsli suurust ja häälesta värve täpselt, kasutades kuueteistkümnendsüsteemis koode.<br><br>
+<b>🖼️ ERINEVAD FAILIVORMINGUD:</b><br>
+Fossify Maalija toetab populaarseid vorminguid nagu PNG, JPG ja SVG. Olenemata sellest, kas salvestad lihtsa visandi või jagad detailset kunstiteost, saad oma loomingut hõlpsalt eksportida just sulle sobivas vormingus.<br><br>
+<b>🛡️ SISSEEHITATUD PRIVAATSUS JA TURVALISUS:</b><br>
+Nagu kõik Fossify rakendused, töötab ka Fossify Maalija täielikult võrguühenduseta ega küsi pealetükkivaid õigusi. Sinu kunstiteosed jäävad turvaliselt sinu seadmesse, tagades sellega meelerahu.<br><br>
+<b>🌐 PÜHENDUMUS AVATUD LÄHTEKOODILE:</b><br>
+Fossify Maalija on avatud lähtekoodiga ja läbipaistev. Uuri koodi GitHubis, tee projektile kaastööd ning saa osaks kogukonnast, mis väärtustab privaatsust ja loovust.<br><br>
+Fossify Maalija sobib igas vanuses ja erineva oskustasemega kunstnikele - loo, kohanda ja jaga oma kunsti, hoides samal ajal oma privaatsus puutumatuna.<br><br>
+Tutvu teiste Fossify rakendustega: https://www.fossify.org
+Avatud lähtekood: https://www.github.com/FossifyOrg
+Liitu kogukonnaga Redditis: https://www.reddit.com/r/Fossify
+Suhtle Telegramis: https://t.me/Fossify
