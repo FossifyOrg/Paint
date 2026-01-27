@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Point
 import android.graphics.PointF
@@ -409,23 +410,36 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun bucketFill() {
-        val touchedX = mCurX.toInt()
-        val touchedY = mCurY.toInt()
-        if (contains(touchedX, touchedY)) {
-            val bitmap = getBitmap()
-            val color = mPaintOptions.color
+        if (mCenter == null) {
+            mCenter = PointF(width / 2f, height / 2f)
+        }
 
-            ensureBackgroundThread {
-                val path = bitmap.vectorFloodFill(
-                    color = color,
-                    x = touchedX,
-                    y = touchedY,
-                    tolerance = FLOOD_FILL_TOLERANCE
-                )
-                val paintOpts = PaintOptions(color = color, strokeWidth = 5f)
-                addOperation(path, paintOpts)
-                post { invalidate() }
-            }
+        val touchedX = mLastTouchX.toInt()
+        val touchedY = mLastTouchY.toInt()
+        if (!contains(touchedX, touchedY)) return
+
+        // apply same transformation as in onDraw()
+        val toScreen = Matrix().apply {
+            preTranslate(mPosX, mPosY)
+            preScale(mScaleFactor, mScaleFactor, mCenter!!.x, mCenter!!.y)
+        }
+
+        val fromScreen = Matrix().apply { toScreen.invert(this) }
+
+        val bitmap = getBitmap()
+        val color = mPaintOptions.color
+        ensureBackgroundThread {
+            val path = bitmap.vectorFloodFill(
+                color = color,
+                x = touchedX,
+                y = touchedY,
+                tolerance = FLOOD_FILL_TOLERANCE
+            )
+
+            path.transform(fromScreen)
+            val paintOpts = PaintOptions(color = color, strokeWidth = 5f)
+            addOperation(path, paintOpts)
+            post { invalidate() }
         }
     }
 
