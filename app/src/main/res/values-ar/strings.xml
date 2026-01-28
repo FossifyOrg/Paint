@@ -11,4 +11,5 @@
     <string name="change_background_color">تغيير لون الخلفية</string>
     <string name="app_launcher_name">الرسم</string>
     <string name="use_relative_brush_size">ضبط حجم الفرشاة بناءً على مستوى التكبير/التصغير</string>
+    <string name="clear_canvas_confirmation">هل أنت متأكد من أنك تريد مسح اللوحة؟</string>
 </resources>
