@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Updated translations
 
+### Changed
+
+- Preference category labels now use sentence case
+
 ### Fixed
 - Fixed unintended zoom when drawing quickly ([#106])
 
@@ -33,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Editing images from other apps now works as expected ([#76])
+- Fixed broken bucket fill when zoomed in ([#20])
 
 ## [1.1.0] - 2025-05-05
 ### Added
@@ -49,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release.
 
+[#20]: https://github.com/FossifyOrg/Paint/issues/20
 [#76]: https://github.com/FossifyOrg/Paint/issues/76
 [#106]: https://github.com/FossifyOrg/Paint/issues/106
 [#119]: https://github.com/FossifyOrg/Paint/issues/119
