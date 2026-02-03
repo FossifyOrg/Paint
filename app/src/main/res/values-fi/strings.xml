@@ -11,4 +11,5 @@
     <string name="change_background_color">Vaihda taustaväriä</string>
     <string name="app_launcher_name">Paint</string>
     <string name="use_relative_brush_size">Säädä siveltimen kokoa zoomaustason mukaan</string>
+    <string name="clear_canvas_confirmation">Haluatko varmasti tyhjentää kankaan?</string>
 </resources>
