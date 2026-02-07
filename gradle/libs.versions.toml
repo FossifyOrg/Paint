@@ -9,7 +9,7 @@ androidx-print = "1.1.0"
 #Fossify
 commons = "6.1.0"
 #Gradle
-gradlePlugins-agp = "8.11.1"
+gradlePlugins-agp = "9.0.0"
 #build
 app-build-compileSDKVersion = "36"
 app-build-targetSDK = "36"
@@ -25,5 +25,4 @@ compose-detekt = { module = "io.nlopez.compose.rules:detekt", version.ref = "det
 fossify-commons = { module = "org.fossify:commons", version.ref = "commons" }
 [plugins]
 android = { id = "com.android.application", version.ref = "gradlePlugins-agp" }
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
