@@ -25,5 +25,4 @@ compose-detekt = { module = "io.nlopez.compose.rules:detekt", version.ref = "det
 fossify-commons = { module = "org.fossify:commons", version.ref = "commons" }
 [plugins]
 android = { id = "com.android.application", version.ref = "gradlePlugins-agp" }
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
