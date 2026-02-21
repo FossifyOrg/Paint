@@ -9,4 +9,7 @@
     <string name="eyedropper">스포이드</string>
     <string name="bucket_fill">채우기</string>
     <string name="allow_zooming_moving_canvas">제스처로 캔버스 확대/축소 및 이동 허용</string>
+    <string name="app_launcher_name">그림판</string>
+    <string name="clear_canvas_confirmation">캔버스를 정말로 지울까요?</string>
+    <string name="use_relative_brush_size">확대 정도에 따라 브러시 크기 조절</string>
 </resources>
