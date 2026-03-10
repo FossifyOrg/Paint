@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="open_file">เปิดไฟล์</string>
-    </resources>
+    <string name="app_launcher_name">ระบายสี</string>
+    <string name="eraser">ยางลบ</string>
+    <string name="eyedropper">หลอดหยด</string>
+    <string name="failed_to_load_image">ไม่สามารถโหลดรูปภาพ %s ได้</string>
+    <string name="clear_canvas_confirmation">คุณแน่ใจหรือไม่ว่าต้องการล้างภาพวาดทั้งหมด?</string>
+    <string name="show_brush_size">แสดงเครื่องมือขนาดแปรง</string>
+    <string name="allow_zooming_moving_canvas">อนุญาตให้ซูมและเลื่อนผืนผ้าใบด้วยท่าทางสัมผัส</string>
+    <string name="use_relative_brush_size">ปรับขนาดแปรงตามระดับการซูม</string>
+    <string name="clear">ล้าง</string>
+    <string name="change_background_color">เปลี่ยนสีพื้นหลัง</string>
+</resources>
