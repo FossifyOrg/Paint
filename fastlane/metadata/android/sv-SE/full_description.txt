@@ -1,0 +1,16 @@
+Fossify Paint är din go-to app för enkel skissning och kreativt uttryck. Oavsett om du vill klottra något roligt eller skapa detaljerad digital konst, är Fossify Paint byggd för att ge dig fullständig kontroll samtidigt som du respekterar din integritet.<br><br>
+<b>✏️ SNABB OCH ENKEL SKISSNING:</b><br>
+Börja rita omedelbart - ingen komplicerad installation eller avancerade verktyg behövs. Välj bara din penselstorlek, välj din färg och ge dina idéer liv på en ren digital duk.<br><br>
+<b>🎨 HELT ANPASSNINGSBART KONSTUTRYMMME:</b><br>
+Anpassa varje aspekt av din ritupplevelse. Ändra bakgrunden på duken, justera penselstorleken och finjustera färgerna med precision med hjälp av hex-koder.<br><br>
+<b>🖼️ VERSATILE FILE FORMATS:</b><br>
+Fossify Paint stöder populära format som PNG, JPG och SVG. Oavsett om du sparar en enkel skiss eller delar detaljerade konstverk kan du enkelt exportera dina skapelser i det format som passar dina behov.<br><br>
+<b>🛡️ PRIVACY & SECURITY INBYGGT:</b><br>
+Som med alla Fossify-appar fungerar Fossify Paint helt offline utan påträngande behörigheter. Dina konstverk förblir säkra på din enhet, vilket garanterar sinnesfrid.<br><br>
+<b>🌐 ÅTAGANDE OM ÖPPEN KÄLLSOURCE:</b><br>
+Fossify Paint är öppen källkod och transparent. Utforska koden på GitHub, bidra till projektet och var en del av ett samhälle som värdesätter integritet och kreativitet.<br><br>
+Fossify Paint vänder sig till konstnärer i alla åldrar och kunskapsnivåer - skapa, anpassa och dela din konst, samtidigt som du håller din integritet intakt.<br><br>
+Utforska fler Fossify-appar: https://www.fossify.org<br>
+Kod med öppen källkod: https://www.github.com/FossifyOrg<br>
+Gå med i gemenskapen på Reddit: https://www.reddit.com/r/Fossify<br>
+Anslut på Telegram: https://t.me/Fossify<br>
