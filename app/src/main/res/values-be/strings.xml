@@ -10,4 +10,6 @@
     <string name="clear">Ачысціць</string>
     <string name="change_background_color">Змяніць колер фону</string>
     <string name="app_launcher_name">Маляванне</string>
+    <string name="clear_canvas_confirmation">Ачысціць холст?</string>
+    <string name="use_relative_brush_size">Змяняць памер кісці пры масштабаванні</string>
 </resources>
