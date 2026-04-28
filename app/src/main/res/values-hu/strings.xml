@@ -9,7 +9,7 @@
     <string name="allow_zooming_moving_canvas">A vászon kézmozdulatokkal történő nagyításának és mozgatásának engedélyezése</string>
     <string name="clear">Törlés</string>
     <string name="change_background_color">Háttérszín megváltoztatása</string>
-    <string name="app_launcher_name">Festés</string>
+    <string name="app_launcher_name">Rajzoló</string>
     <string name="use_relative_brush_size">Ecset méretezése a zoomoláshoz</string>
     <string name="clear_canvas_confirmation">Biztosan törölni szeretné a vásznat?</string>
 </resources>
