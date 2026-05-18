@@ -9,4 +9,7 @@
     <string name="allow_zooming_moving_canvas">فعالسازی زوم و جابه‌جایی بوم با اشاره</string>
     <string name="clear">پاک‌کردن</string>
     <string name="change_background_color">تغییر رنگ پس‌زمینه</string>
+    <string name="clear_canvas_confirmation">آیا مطمئن هستید میخواهید بوم را پاک کنید؟</string>
+    <string name="use_relative_brush_size">بر اساس میزان زوم سایز قلم را تغییر بده</string>
+    <string name="app_launcher_name">نقاشی</string>
 </resources>
