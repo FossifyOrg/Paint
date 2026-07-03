@@ -1,5 +1,6 @@
 package org.fossify.paint.actions
 
+import android.graphics.Matrix
 import android.graphics.Path
 import java.io.Writer
 import java.security.InvalidParameterException
@@ -34,7 +35,9 @@ class Line : Action {
         path.lineTo(x, y)
     }
 
-    override fun perform(writer: Writer) {
-        writer.write("L$x,$y")
+    override fun perform(writer: Writer, transform: Matrix) {
+        val points = floatArrayOf(x, y)
+        transform.mapPoints(points)
+        writer.write("L${points[0]},${points[1]}")
     }
 }

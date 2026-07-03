@@ -1,6 +1,7 @@
 package org.fossify.paint.models
 
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.sax.RootElement
@@ -37,7 +38,15 @@ object Svg {
         if (outputStream != null) {
             val backgroundColor = (canvas.background as ColorDrawable).color
             val writer = BufferedWriter(OutputStreamWriter(outputStream))
-            writeSvg(writer, backgroundColor, canvas.getPathsMap(), canvas.width, canvas.height)
+            writeSvg(
+                writer,
+                backgroundColor,
+                canvas.getPathsMap(),
+                canvas.width,
+                canvas.height,
+                canvas.getCanvasTransform(),
+                canvas.getScaleFactor()
+            )
             writer.close()
             activity.toast(R.string.file_saved)
         } else {
@@ -50,7 +59,9 @@ object Svg {
         backgroundColor: Int,
         paths: Map<MyPath, PaintOptions>,
         width: Int,
-        height: Int
+        height: Int,
+        transform: Matrix,
+        scaleFactor: Float
     ) {
         writer.apply {
             write("<svg width=\"$width\" height=\"$height\" xmlns=\"http://www.w3.org/2000/svg\">")
@@ -63,24 +74,30 @@ object Svg {
             )
 
             for ((key, value) in paths) {
-                writePath(this, key, value)
+                writePath(this, key, value, transform, scaleFactor)
             }
             write("</svg>")
         }
     }
 
-    private fun writePath(writer: Writer, path: MyPath, options: PaintOptions) {
+    private fun writePath(
+        writer: Writer,
+        path: MyPath,
+        options: PaintOptions,
+        transform: Matrix,
+        scaleFactor: Float
+    ) {
         writer.apply {
             write("<path d=\"")
             path.actions.forEach {
-                it.perform(this)
+                it.perform(this, transform)
                 write(" ")
             }
 
             write("\" fill=\"none\" stroke=\"")
             write(options.getColorToExport())
             write("\" stroke-width=\"")
-            write(options.strokeWidth.toString())
+            write((options.strokeWidth * scaleFactor).toString())
             write("\" stroke-linecap=\"round\"/>")
         }
     }

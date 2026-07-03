@@ -1,5 +1,6 @@
 package org.fossify.paint.actions
 
+import android.graphics.Matrix
 import android.graphics.Path
 import java.io.Writer
 import java.security.InvalidParameterException
@@ -43,7 +44,11 @@ class Quad : Action {
         path.quadTo(x1, y1, x2, y2)
     }
 
-    override fun perform(writer: Writer) {
-        writer.write("Q$x1,$y1 $x2,$y2")
+    override fun perform(writer: Writer, transform: Matrix) {
+        val control = floatArrayOf(x1, y1)
+        val end = floatArrayOf(x2, y2)
+        transform.mapPoints(control)
+        transform.mapPoints(end)
+        writer.write("Q${control[0]},${control[1]} ${end[0]},${end[1]}")
     }
 }

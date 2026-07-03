@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- Fixed SVG export not being cropped to the visible area after the canvas was moved or zoomed ([#26])
 
 ## [1.4.0] - 2026-01-30
 ### Added
@@ -54,6 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release.
 
+[#26]: https://github.com/FossifyOrg/Paint/issues/26
 [#76]: https://github.com/FossifyOrg/Paint/issues/76
 [#106]: https://github.com/FossifyOrg/Paint/issues/106
 [#119]: https://github.com/FossifyOrg/Paint/issues/119

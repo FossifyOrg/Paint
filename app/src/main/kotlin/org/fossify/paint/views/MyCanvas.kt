@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Point
 import android.graphics.PointF
@@ -452,6 +453,17 @@ class MyCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     fun getPathsMap() = mOperations
+
+    fun getScaleFactor() = mScaleFactor
+
+    // the pan/zoom transform currently applied in onDraw, so exports can match the visible area
+    fun getCanvasTransform(): Matrix {
+        val center = mCenter ?: PointF(width / 2f, height / 2f)
+        return Matrix().apply {
+            postScale(mScaleFactor, mScaleFactor, center.x, center.y)
+            postTranslate(mPosX, mPosY)
+        }
+    }
 
     fun getDrawingHashCode(): Long {
         return if (mOperations.isEmpty()) {
