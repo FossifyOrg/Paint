@@ -9,4 +9,7 @@
     <string name="allow_zooming_moving_canvas">Dovoli povečavo in premikanje platna s kretnjami</string>
     <string name="clear">Počisti</string>
     <string name="change_background_color">Spremeni barvo ozadja</string>
+    <string name="app_launcher_name">Slikar</string>
+    <string name="clear_canvas_confirmation">Ali ste prepričani, da želite počistiti platno?</string>
+    <string name="use_relative_brush_size">Prilagodite velikost čopiča glede na stopnjo povečave</string>
 </resources>
