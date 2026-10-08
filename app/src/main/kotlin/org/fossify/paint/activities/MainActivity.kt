@@ -218,7 +218,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
             findItem(R.id.menu_share).isVisible = !isImageCaptureIntent && !isEditIntent
             findItem(R.id.open_file).isVisible = !isEditIntent
             findItem(R.id.more_apps_from_us).isVisible =
-                !resources.getBoolean(R.bool.hide_google_relations)
+                resources.getBoolean(R.bool.is_google_play_build)
         }
     }
 
@@ -273,7 +273,7 @@ class MainActivity : SimpleActivity(), CanvasListener {
 
         val faqItems = ArrayList<FAQItem>()
 
-        if (!resources.getBoolean(R.bool.hide_google_relations)) {
+        if (resources.getBoolean(R.bool.is_google_play_build)) {
             faqItems.add(FAQItem(R.string.faq_2_title_commons, R.string.faq_2_text_commons))
             faqItems.add(FAQItem(R.string.faq_6_title_commons, R.string.faq_6_text_commons))
             faqItems.add(FAQItem(R.string.faq_7_title_commons, R.string.faq_7_text_commons))
