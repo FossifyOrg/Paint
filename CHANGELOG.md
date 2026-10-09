@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Fixed broken bucket fill when zoomed in ([#20])
+
 ## [1.4.0] - 2026-01-30
 ### Added
 - Added support for custom fonts
@@ -54,6 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release.
 
+[#20]: https://github.com/FossifyOrg/Paint/issues/20
 [#76]: https://github.com/FossifyOrg/Paint/issues/76
 [#106]: https://github.com/FossifyOrg/Paint/issues/106
 [#119]: https://github.com/FossifyOrg/Paint/issues/119
