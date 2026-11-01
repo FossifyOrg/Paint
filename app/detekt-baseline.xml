@@ -2,10 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ComplexCondition:MainActivity.kt$MainActivity$requestCode == PICK_IMAGE_INTENT &amp;&amp; resultCode == Activity.RESULT_OK &amp;&amp; resultData != null &amp;&amp; resultData.data != null</ID>
-    <ID>ComplexCondition:MainActivity.kt$MainActivity$requestCode == SAVE_IMAGE_INTENT &amp;&amp; resultCode == Activity.RESULT_OK &amp;&amp; resultData != null &amp;&amp; resultData.data != null</ID>
     <ID>ComplexCondition:MyCanvas.kt$MyCanvas$!mIsBucketFillOn &amp;&amp; (!mAllowMovingZooming || (!mScaleDetector!!.isInProgress &amp;&amp; event.pointerCount == 1 &amp;&amp; !mWasMultitouch))</ID>
-    <ID>ConstructorParameterNaming:VectorFloodFiller.kt$VectorFloodFiller.FloodFillRange$var Y: Int</ID>
     <ID>CyclomaticComplexMethod:MyCanvas.kt$MyCanvas$override fun onTouchEvent(event: MotionEvent): Boolean</ID>
     <ID>EmptyCatchBlock:MainActivity.kt$MainActivity${ }</ID>
     <ID>LargeClass:MainActivity.kt$MainActivity : SimpleActivityCanvasListener</ID>
@@ -18,32 +15,18 @@
     <ID>MagicNumber:MyCanvas.kt$MyCanvas$100f</ID>
     <ID>MagicNumber:MyCanvas.kt$MyCanvas.ScaleListener$0.1f</ID>
     <ID>MagicNumber:MyCanvas.kt$MyCanvas.ScaleListener$10.0f</ID>
-    <ID>MagicNumber:VectorFloodFiller.kt$VectorFloodFiller$0xff</ID>
-    <ID>MagicNumber:VectorFloodFiller.kt$VectorFloodFiller$16</ID>
-    <ID>MagicNumber:VectorFloodFiller.kt$VectorFloodFiller$8</ID>
-    <ID>MaxLineLength:MainActivity.kt$MainActivity$if</ID>
-    <ID>MaxLineLength:MainActivity.kt$MainActivity$}</ID>
     <ID>MaxLineLength:MyCanvas.kt$MyCanvas$if</ID>
     <ID>MaxLineLength:SettingsActivity.kt$SettingsActivity$settingsUseEnglishHolder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") &amp;&amp; !isTiramisuPlus())</ID>
-    <ID>MaxLineLength:VectorFloodFiller.kt$VectorFloodFiller$// if we're not below the bottom of the bitmap and the pixel below this one is within the color tolerance</ID>
-    <ID>MaxLineLength:VectorFloodFiller.kt$VectorFloodFiller$return red &gt;= startColorRed - tolerance &amp;&amp; red &lt;= startColorRed + tolerance &amp;&amp; green &gt;= startColorGreen - tolerance &amp;&amp; green &lt;= startColorGreen + tolerance &amp;&amp; blue &gt;= startColorBlue - tolerance &amp;&amp; blue &lt;= startColorBlue + tolerance</ID>
-    <ID>NestedBlockDepth:MyPath.kt$MyPath$fun readObject(pathData: String, activity: Activity)</ID>
     <ID>SerialVersionUIDInSerializableClass:MyPath.kt$MyPath : PathSerializable</ID>
-    <ID>SerialVersionUIDInSerializableClass:Svg.kt$Svg$SPath : Serializable</ID>
-    <ID>SerialVersionUIDInSerializableClass:Svg.kt$Svg$SRect : Serializable</ID>
-    <ID>SerialVersionUIDInSerializableClass:Svg.kt$Svg$SSvg : Serializable</ID>
     <ID>SwallowedException:MainActivity.kt$MainActivity$e: ActivityNotFoundException</ID>
     <ID>SwallowedException:MainActivity.kt$MainActivity$e: Exception</ID>
     <ID>SwallowedException:MyCanvas.kt$MyCanvas$e: Exception</ID>
     <ID>SwallowedException:MyCanvas.kt$MyCanvas$e: ExecutionException</ID>
-    <ID>SwallowedException:MyPath.kt$MyPath$e: Exception</ID>
     <ID>TooGenericExceptionCaught:MainActivity.kt$MainActivity$e: Exception</ID>
     <ID>TooGenericExceptionCaught:MyCanvas.kt$MyCanvas$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:MyPath.kt$MyPath$e: Exception</ID>
     <ID>TooManyFunctions:MainActivity.kt$MainActivity : SimpleActivityCanvasListener</ID>
     <ID>TooManyFunctions:MyCanvas.kt$MyCanvas : View</ID>
     <ID>UnusedPrivateMember:MyPath.kt$MyPath$private fun readObject(inputStream: ObjectInputStream)</ID>
-    <ID>VariableNaming:MyCanvas.kt$MyCanvas$private val FLOOD_FILL_TOLERANCE = 1</ID>
     <ID>VariableNaming:MyCanvas.kt$MyCanvas$private val MAX_HISTORY_COUNT = 1000</ID>
     <ID>VariableNaming:SaveImageDialog.kt$SaveImageDialog$private val SIMPLE_DRAW = "Fossify Paint"</ID>
   </CurrentIssues>
