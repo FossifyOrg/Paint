@@ -1,6 +1,6 @@
 [versions]
 junit = "4.13.2"
-robolectric = "4.17"
+robolectric = "4.18.1"
 androidx-test = "1.7.0"
 androidx-test-junit = "1.3.0"
 clipper2 = "2.0.1b"
