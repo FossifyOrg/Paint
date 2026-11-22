@@ -3,13 +3,13 @@
     <string name="open_file">Öppna fil</string>
     <string name="eraser">Radergummi</string>
     <string name="eyedropper">Pipett</string>
-    <string name="bucket_fill">Färgpyts</string>
+    <string name="bucket_fill">Fyll med färg</string>
     <string name="failed_to_load_image">Det gick inte att läsa in bilden %s</string>
-    <string name="show_brush_size">Visa penselstorleksverktyg</string>
+    <string name="show_brush_size">Visa verktyget för penselstorlek</string>
     <string name="allow_zooming_moving_canvas">Tillåt zoomning och förflyttning av arbetsytan med gester</string>
     <string name="clear">Rensa</string>
     <string name="change_background_color">Ändra bakgrundsfärg</string>
-    <string name="app_launcher_name">Måla</string>
+    <string name="app_launcher_name">Paint</string>
     <string name="use_relative_brush_size">Justera penselstorleken utifrån zoomnivån</string>
     <string name="clear_canvas_confirmation">Är du säker på att du vill rensa arbetsytan?</string>
 </resources>
